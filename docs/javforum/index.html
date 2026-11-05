@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jav-forum · 三上悠亜</title>
+<style>
+:root {
+  --ink: #1c1915;
+  --muted: #5e584f;
+  --line: #ddd6c8;
+  --paper: #f6f1e7;
+  --card: #fffdf8;
+  --bar: #241f1a;
+  --seal: #8d2f2a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.5 "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+}
+a { color: var(--seal); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bar);
+  color: var(--paper);
+}
+.top-inner { max-width: 640px; margin: 0 auto; padding: 12px 16px 0; }
+.brand { color: inherit; text-decoration: none; font-weight: 650; font-size: 18px; }
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2px;
+  padding: 6px 0 0;
+}
+.filters a {
+  flex: 0 0 auto;
+  color: #f6f1e7;
+  text-decoration: none;
+  padding: 8px 10px 10px;
+  font-size: 14px;
+  border-bottom: 2px solid transparent;
+}
+.filters a[aria-current="page"] { border-bottom-color: #f6f1e7; font-weight: 650; }
+.filters .count { color: #c8bfb2; font-size: 12px; margin-left: 4px; }
+.wrap { max-width: 640px; margin: 0 auto; padding: 14px 16px 64px; }
+.whoami {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.whoami strong { color: var(--ink); font-size: 18px; font-weight: 650; }
+.crumb { margin: 0 0 8px; font-size: 14px; }
+.note, .miss {
+  background: #fff8e8;
+  border: 1px solid #e4d3a4;
+  padding: 10px 12px;
+  margin: 8px 0 12px;
+}
+.quiet { color: var(--muted); }
+.feed { display: flex; flex-direction: column; }
+.card {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.mark {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--bar);
+  color: var(--paper);
+  font-size: 13px;
+  font-weight: 700;
+}
+.mark.youtube { background: #8d2f2a; }
+.mark.x { background: #1c1915; }
+.mark.oshiseku { background: #6b5344; }
+.mark.javforum { background: #3e5344; }
+.mark.avfan { background: #3e4a5c; }
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: baseline;
+}
+.head strong { font-weight: 650; }
+.head time { margin-left: auto; color: var(--muted); font-size: 13px; }
+.kind { color: var(--muted); font-size: 13px; }
+.tag {
+  display: inline-block;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 0 6px;
+}
+.tag.youtube { color: #8d2f2a; border-color: #e2c4c1; }
+.tag.x { color: #1c1915; }
+.tag.oshiseku { color: #6b5344; border-color: #e0d2c6; }
+.tag.javforum { color: #3e5344; border-color: #cdd6ce; }
+.tag.avfan { color: #3e4a5c; border-color: #cfd5de; }
+.text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 8px 0;
+}
+.shots {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0;
+}
+.shots.n1 { grid-template-columns: minmax(0, 1fr); }
+.shots.n2, .shots.n3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.shots.n3 a:first-child { grid-column: 1 / -1; }
+.shots a {
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--bar);
+}
+.shots img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.media {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+  margin: 8px 0;
+  min-width: 0;
+}
+.media img {
+  width: 100%;
+  height: 100%;
+  min-height: 94px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--bar);
+  display: block;
+}
+.media.work { grid-template-columns: 112px minmax(0, 1fr); }
+.media.plain { grid-template-columns: minmax(0, 1fr); }
+.code {
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  background: var(--bar);
+  color: var(--paper);
+  font-weight: 700;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.media-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+.media-copy strong { overflow-wrap: anywhere; }
+.domain { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.also, .links { margin: 4px 0 0; font-size: 14px; }
+.also a, .links a { margin-right: 10px; }
+.split { font-size: 15px; font-weight: 650; margin: 18px 0 0; }
+@media (max-width: 720px) {
+  .head time { margin-left: 0; }
+  .media, .media.work { grid-template-columns: minmax(0, 1fr); }
+  .code { min-height: 56px; }
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-inner">
+    <a class="brand" href="../">三上悠亜</a>
+    <nav class='filters' aria-label='Source'><a href='../'>All<span class='count'>80</span></a><a href='../youtube/'>YouTube<span class='count'>15</span></a><a href='../x/'>X<span class='count'>5</span></a><a href='../oshiseku/'>Oshiseku<span class='count'>14</span></a><a href='../javforum/' aria-current='page'>Jav-forum<span class='count'>26</span></a><a href='../avfan/'>avfan<span class='count'>10</span></a><a href='../tiktok/'>TikTok<span class='count'>5</span></a><a href='../instagram/'>Instagram<span class='count'>5</span></a></nav>
+  </div>
+</div>
+<div class="wrap">
+<p class='whoami'><strong>三上悠亜</strong><span>Yua Mikami</span><span>みかみゆあ</span><span>1993-08-16（33歳）</span><span>159 cm</span><span>84（Fカップ） / 58 / 88</span></p><p class='note'>latest page https://www.jav-forum.com/threads/yua-mikami-%E4%B8%89%E4%B8%8A%E6%82%A0%E4%BA%9C.143/page-12#post-144156; also read https://www.jav-forum.com/threads/yua-mikami-%E4%B8%89%E4%B8%8A%E6%82%A0%E4%BA%9C.143/page-10 (HTTP 200) for post 108578</p><div class='feed'>
+    <article class='card' id='post-javforum-144156' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>GBUK</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-10-30T12:22:14Z'>2026-10-30 12:22</time>
+        </header>
+        <p class='text'>Those two in the front must be gay. I can see why she was voted Cheerleader of the Year.</p>
+        <a class='media plain' href='https://www.jav-forum.com/posts/144156/'><span class='media-copy'><span class='tag'>Jav-forum</span><strong>Media attached on the original post</strong><span class='domain'>The file stays on the forum.</span></span></a>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/144156/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-143973' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>GBUK</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-10-29T13:36:22Z'>2026-10-29 13:36</time>
+        </header>
+        <p class='text'>SKE48, cheerleader of the year and now continuing acting today – in the Netflix series Sins of Kujo , playing Shiraishi Momoka. I think it is an episode of how a girl gets mixed up in the shady world of adult films and wants out. But it was in Arabic.</p>
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/training-image-jpg.208442/'><img src='https://www.jav-forum.com/attachments/training-image-jpg.208442/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/screenshot-2026-10-29-at-13-19-16-jpg.208443/'><img src='https://www.jav-forum.com/attachments/screenshot-2026-10-29-at-13-19-16-jpg.208443/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hggzbs9bgaeyyce-jpg.208444/'><img src='https://www.jav-forum.com/attachments/hggzbs9bgaeyyce-jpg.208444/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/screenshot-2026-10-29-at-13-16-33-jpg.208445/'><img src='https://www.jav-forum.com/attachments/screenshot-2026-10-29-at-13-16-33-jpg.208445/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/143973/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-138674' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Darksider</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-09-28T07:42:32Z'>2026-09-28 07:42</time>
+        </header>
+        <p class='text'>it&#x27;s everywhere online</p>
+        
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/138674/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-138670' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>kop1727</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-09-28T06:12:50Z'>2026-09-28 06:12</time>
+        </header>
+        <p class='text'>does anyone has SSNI 802 FHD version ?</p>
+        
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/138670/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-115799' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-06-08T16:19:44Z'>2026-06-08 16:19</time>
+        </header>
+        <p class='text'>@yua_mikami
+Made a cute yukata this year too
+A summery watercolor floral pink and
+an adult-cute brown color
+▼Yukata available here♡
+https://
+sugar-net.com/phone/page/3839
+三上悠亜 (@yua_mikami) on X
+今年も可愛い浴衣作りました🎀🤎 夏らしい水彩花柄ピンクと 大人かわいいブラウンカラー🫶🏻 ▼浴衣はこちらから♡ https://t.co/BPp32r6iIg https://t.co/QQrupHjFAM 
+x.com</p>
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/hkr2qqsa8aafszu-jpg.177230/'><img src='https://www.jav-forum.com/attachments/hkr2qqsa8aafszu-jpg.177230/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hkr2qqwbuaa09f_-jpg.177231/'><img src='https://www.jav-forum.com/attachments/hkr2qqwbuaa09f_-jpg.177231/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/115799/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-115609' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-06-08T01:41:51Z'>2026-06-08 01:41</time>
+        </header>
+        <p class='text'>@yua_mikami
+Summer is T-shirts, right?
+https://x.com/yua_mikami/status/2063595816301040046</p>
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/hknddngbwaavtqs-jpg.176992/'><img src='https://www.jav-forum.com/attachments/hknddngbwaavtqs-jpg.176992/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hknddnqasaaxkh8-jpg.176993/'><img src='https://www.jav-forum.com/attachments/hknddnqasaaxkh8-jpg.176993/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/115609/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-109352' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-13T16:09:37Z'>2026-05-13 16:09</time>
+        </header>
+        <p class='text'>@yua_mikami
+Taiwan&#x27;s Cheerleaders 
+Received first place in the popularity poll 
+Thank you to everyone who voted
+https://x.com/yua_mikami/status/2054534603302744282</p>
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/himsvj2amaabgyu-jpg.168915/'><img src='https://www.jav-forum.com/attachments/himsvj2amaabgyu-jpg.168915/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/himsvj3bmaaglrd-jpg.168916/'><img src='https://www.jav-forum.com/attachments/himsvj3bmaaglrd-jpg.168916/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/109352/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-109322' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-13T16:05:07Z'>2026-05-13 16:05</time>
+        </header>
+        <p class='text'>@loveyua_816
+Chia Yuua, no matter how many times I watch, I keep falling deeper... 
+♡Yua Mikami♡ #World&#x27;s Cutest Cheerleader
+https://x.com/loveyua_816/status/2054415643701825911</p>
+        <a class='media plain' href='https://www.jav-forum.com/posts/109322/'><span class='media-copy'><span class='tag'>Jav-forum</span><strong>Media attached on the original post</strong><span class='domain'>The file stays on the forum.</span></span></a>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/109322/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-109207' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-13T03:08:26Z'>2026-05-13 03:08</time>
+        </header>
+        <p class='text'>@craig_steen
+The world&#x27;s cutest Yua Mikami-chan
+https://x.com/craig_steen/status/2054369535286026364</p>
+        <a class='media plain' href='https://www.jav-forum.com/posts/109207/'><span class='media-copy'><span class='tag'>Jav-forum</span><strong>Media attached on the original post</strong><span class='domain'>The file stays on the forum.</span></span></a>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/109207/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-109140' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-13T01:12:01Z'>2026-05-13 01:12</time>
+        </header>
+        <p class='text'>@craig_steen
+Yua Mikami-chan is just too beautiful
+https://x.com/craig_steen/status/2054082393200308706</p>
+        <div class='shots n1'><a href='https://www.jav-forum.com/attachments/hh19fbyayaasr2l-jpg.168636/'><img src='https://www.jav-forum.com/attachments/hh19fbyayaasr2l-jpg.168636/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/109140/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-109038' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>melon</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-12T04:19:15Z'>2026-05-12 04:19</time>
+        </header>
+        <p class='text'>She was never this thin when she was filming actively. Maybe it’s okay she didn’t go kana or mia slim route. She’s going for less tan skin.</p>
+        
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/109038/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-109032' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-12T02:36:48Z'>2026-05-12 02:36</time>
+        </header>
+        <p class='text'>@yua_mikami
+TWICE concert day&#x27;s GRWM
+https://
+youtu.be/9zE-qIKeZLs?si
+=rXGNW227T8AEKzwL
+…
+https://x.com/yua_mikami/status/2053793402442149909</p>
+        <div class='shots n1'><a href='https://www.jav-forum.com/attachments/hicknerbsaa4kiz-jpg.168491/'><img src='https://www.jav-forum.com/attachments/hicknerbsaa4kiz-jpg.168491/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/109032/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-109003' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-12T02:32:26Z'>2026-05-12 02:32</time>
+        </header>
+        <p class='text'>@craig_steen
+I like Yua Mikami-chan so much that it hurts.
+https://x.com/craig_steen/status/2053794999578349638</p>
+        <div class='shots n1'><a href='https://www.jav-forum.com/attachments/hh19bi8ayaawxg4-jpg.168458/'><img src='https://www.jav-forum.com/attachments/hh19bi8ayaawxg4-jpg.168458/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/109003/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-108951' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>nadirafasyaku</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-11T17:24:02Z'>2026-05-11 17:24</time>
+        </header>
+        <p class='text'>up</p>
+        
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/108951/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-108711' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-11T03:59:16Z'>2026-05-11 03:59</time>
+        </header>
+        <p class='text'>@yua_mikami
+https://x.com/yua_mikami/status/2053436690791100769</p>
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/hh9fykbaeaaez5_-jpg.168090/'><img src='https://www.jav-forum.com/attachments/hh9fykbaeaaez5_-jpg.168090/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hh9fykhbmaen_qa-jpg.168091/'><img src='https://www.jav-forum.com/attachments/hh9fykhbmaen_qa-jpg.168091/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/108711/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-108605' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Nikki</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-10T12:01:10Z'>2026-05-10 12:01</time>
+        </header>
+        <p class='text'>Who do you think will be the next popular JAV Actress after her?
+Imagine if she is still active, what JAV will she do?
+5 minute challenge,
+Student and Teacher theme
+Childhood</p>
+        
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/108605/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-108580' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-10T08:57:48Z'>2026-05-10 08:57</time>
+        </header>
+        <p class='text'>@craig_steen
+Yua Mikami-chan is irresistible.
+https://x.com/craig_steen/status/2053280861735555134</p>
+        <div class='shots n1'><a href='https://www.jav-forum.com/attachments/hh18ztabqaajhbg-jpg.167903/'><img src='https://www.jav-forum.com/attachments/hh18ztabqaajhbg-jpg.167903/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/108580/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-108579' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-10T08:57:39Z'>2026-05-10 08:57</time>
+        </header>
+        <p class='text'>@craig_steen
+Yua Mikami-chan is the best, nothing else comes close.
+https://x.com/craig_steen/status/2052924547826118913</p>
+        <a class='media plain' href='https://www.jav-forum.com/posts/108579/'><span class='media-copy'><span class='tag'>Jav-forum</span><strong>Media attached on the original post</strong><span class='domain'>The file stays on the forum.</span></span></a>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/108579/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-108578' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-10T08:57:31Z'>2026-05-10 08:57</time>
+        </header>
+        <p class='text'>@BlackBikiniLove
+#三上悠亜
+#黒下着
+https://x.com/BlackBikiniLove/status/2052616419993624971</p>
+        <div class='shots n3'><a href='https://www.jav-forum.com/attachments/hhxbwkjbqaaz_ou-1-jpg.167899/'><img src='https://www.jav-forum.com/attachments/hhxbwkjbqaaz_ou-1-jpg.167899/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hhxbwkia8aeswmm-1-jpg.167900/'><img src='https://www.jav-forum.com/attachments/hhxbwkia8aeswmm-1-jpg.167900/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hhxbwkiasaalmq6-1-jpg.167901/'><img src='https://www.jav-forum.com/attachments/hhxbwkiasaalmq6-1-jpg.167901/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/108578/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-108385' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-09T10:08:05Z'>2026-05-09 10:08</time>
+        </header>
+        <p class='text'>@yua_mikami
+Trendy baseball watching
+https://x.com/yua_mikami/status/2052699613334016032</p>
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/hhynaquaqaatpvf-jpg.167574/'><img src='https://www.jav-forum.com/attachments/hhynaquaqaatpvf-jpg.167574/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hhynaqvaaaeysvr-jpg.167575/'><img src='https://www.jav-forum.com/attachments/hhynaqvaaaeysvr-jpg.167575/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/108385/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-108384' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-09T10:07:53Z'>2026-05-09 10:07</time>
+        </header>
+        <p class='text'>@yua_mikami
+Taiwan Peach John
+https://x.com/yua_mikami/status/2052358532125921615</p>
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/hhtxnlkbmaaqzlt-jpg.167572/'><img src='https://www.jav-forum.com/attachments/hhtxnlkbmaaqzlt-jpg.167572/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hhtxnljacaafblz-jpg.167573/'><img src='https://www.jav-forum.com/attachments/hhtxnljacaafblz-jpg.167573/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/108384/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-107573' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-05T05:39:22Z'>2026-05-05 05:39</time>
+        </header>
+        <p class='text'>@yua_mikami
+https://x.com/yua_mikami/status/2051272632138703313</p>
+        <div class='shots n1'><a href='https://www.jav-forum.com/attachments/hhevlgqacaizzli-jpg.166584/'><img src='https://www.jav-forum.com/attachments/hhevlgqacaizzli-jpg.166584/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/107573/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-107572' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-05T05:39:15Z'>2026-05-05 05:39</time>
+        </header>
+        <p class='text'>@yua_mikami
+All slots were sold out, 
+but the resale of exhibition tickets has now started 
+Please come and join us 
+▼Exhibition tickets are here 
+https://
+linktr.ee/mistreass
+https://x.com/yua_mikami/status/2050531362885795868</p>
+        <div class='shots n1'><a href='https://www.jav-forum.com/attachments/hglqzocbeaadk0b-jpg.166583/'><img src='https://www.jav-forum.com/attachments/hglqzocbeaadk0b-jpg.166583/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/107572/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-107571' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-05T05:39:07Z'>2026-05-05 05:39</time>
+        </header>
+        <p class='text'>@yua_mikami
+台湾
+https://x.com/yua_mikami/status/2050182036019929580</p>
+        <div class='shots n1'><a href='https://www.jav-forum.com/attachments/hho1sdhbeaazzmg-jpg.166581/'><img src='https://www.jav-forum.com/attachments/hho1sdhbeaazzmg-jpg.166581/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/107571/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-107570' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-05-05T05:27:22Z'>2026-05-05 05:27</time>
+        </header>
+        <p class='text'>@yua_mikami
+https://x.com/yua_mikami/status/2038208818723922403</p>
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/hekshf5a8aagx5r-jpg.166575/'><img src='https://www.jav-forum.com/attachments/hekshf5a8aagx5r-jpg.166575/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/hekshf7asaa4cqk-jpg.166576/'><img src='https://www.jav-forum.com/attachments/hekshf7asaa4cqk-jpg.166576/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/107570/'>Open original</a></p>
+      </div>
+    </article>
+    
+    <article class='card' id='post-javforum-100393' data-site='javforum'>
+      <div class='mark javforum' aria-hidden='true'>掲</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>Islidur</strong>
+          <a class='tag javforum' href='../javforum/'>Jav-forum</a>
+          <span class='kind'>Forum post</span>
+          <time datetime='2026-03-24T12:15:47Z'>2026-03-24 12:15</time>
+        </header>
+        
+        <div class='shots n2'><a href='https://www.jav-forum.com/attachments/1774354457761-png.158424/'><img src='https://www.jav-forum.com/attachments/1774354457761-png.158424/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://www.jav-forum.com/attachments/1774354479939-png.158426/'><img src='https://www.jav-forum.com/attachments/1774354479939-png.158426/' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.jav-forum.com/posts/100393/'>Open original</a></p>
+      </div>
+    </article>
+    </div>
+</div>
+</body>
+</html>

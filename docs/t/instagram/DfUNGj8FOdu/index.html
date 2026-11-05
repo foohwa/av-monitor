@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>本日から · 三上悠亜</title>
+<style>
+:root {
+  --ink: #1c1915;
+  --muted: #5e584f;
+  --line: #ddd6c8;
+  --paper: #f6f1e7;
+  --card: #fffdf8;
+  --bar: #241f1a;
+  --seal: #8d2f2a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.5 "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+}
+a { color: var(--seal); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bar);
+  color: var(--paper);
+}
+.top-inner { max-width: 640px; margin: 0 auto; padding: 12px 16px 0; }
+.brand { color: inherit; text-decoration: none; font-weight: 650; font-size: 18px; }
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2px;
+  padding: 6px 0 0;
+}
+.filters a {
+  flex: 0 0 auto;
+  color: #f6f1e7;
+  text-decoration: none;
+  padding: 8px 10px 10px;
+  font-size: 14px;
+  border-bottom: 2px solid transparent;
+}
+.filters a[aria-current="page"] { border-bottom-color: #f6f1e7; font-weight: 650; }
+.filters .count { color: #c8bfb2; font-size: 12px; margin-left: 4px; }
+.wrap { max-width: 640px; margin: 0 auto; padding: 14px 16px 64px; }
+.whoami {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.whoami strong { color: var(--ink); font-size: 18px; font-weight: 650; }
+.crumb { margin: 0 0 8px; font-size: 14px; }
+.note, .miss {
+  background: #fff8e8;
+  border: 1px solid #e4d3a4;
+  padding: 10px 12px;
+  margin: 8px 0 12px;
+}
+.quiet { color: var(--muted); }
+.feed { display: flex; flex-direction: column; }
+.card {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.mark {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--bar);
+  color: var(--paper);
+  font-size: 13px;
+  font-weight: 700;
+}
+.mark.youtube { background: #8d2f2a; }
+.mark.x { background: #1c1915; }
+.mark.oshiseku { background: #6b5344; }
+.mark.javforum { background: #3e5344; }
+.mark.avfan { background: #3e4a5c; }
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: baseline;
+}
+.head strong { font-weight: 650; }
+.head time { margin-left: auto; color: var(--muted); font-size: 13px; }
+.kind { color: var(--muted); font-size: 13px; }
+.tag {
+  display: inline-block;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 0 6px;
+}
+.tag.youtube { color: #8d2f2a; border-color: #e2c4c1; }
+.tag.x { color: #1c1915; }
+.tag.oshiseku { color: #6b5344; border-color: #e0d2c6; }
+.tag.javforum { color: #3e5344; border-color: #cdd6ce; }
+.tag.avfan { color: #3e4a5c; border-color: #cfd5de; }
+.text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 8px 0;
+}
+.shots {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0;
+}
+.shots.n1 { grid-template-columns: minmax(0, 1fr); }
+.shots.n2, .shots.n3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.shots.n3 a:first-child { grid-column: 1 / -1; }
+.shots a {
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--bar);
+}
+.shots img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.media {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+  margin: 8px 0;
+  min-width: 0;
+}
+.media img {
+  width: 100%;
+  height: 100%;
+  min-height: 94px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--bar);
+  display: block;
+}
+.media.work { grid-template-columns: 112px minmax(0, 1fr); }
+.media.plain { grid-template-columns: minmax(0, 1fr); }
+.code {
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  background: var(--bar);
+  color: var(--paper);
+  font-weight: 700;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.media-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+.media-copy strong { overflow-wrap: anywhere; }
+.domain { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.also, .links { margin: 4px 0 0; font-size: 14px; }
+.also a, .links a { margin-right: 10px; }
+.split { font-size: 15px; font-weight: 650; margin: 18px 0 0; }
+@media (max-width: 720px) {
+  .head time { margin-left: 0; }
+  .media, .media.work { grid-template-columns: minmax(0, 1fr); }
+  .code { min-height: 56px; }
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-inner">
+    <a class="brand" href="../../../">三上悠亜</a>
+    <nav class='filters' aria-label='Source'><a href='../../../'>All<span class='count'>80</span></a><a href='../../../youtube/'>YouTube<span class='count'>15</span></a><a href='../../../x/'>X<span class='count'>5</span></a><a href='../../../oshiseku/'>Oshiseku<span class='count'>14</span></a><a href='../../../javforum/'>Jav-forum<span class='count'>26</span></a><a href='../../../avfan/'>avfan<span class='count'>10</span></a><a href='../../../tiktok/'>TikTok<span class='count'>5</span></a><a href='../../../instagram/' aria-current='page'>Instagram<span class='count'>5</span></a></nav>
+  </div>
+</div>
+<div class="wrap">
+<p class='crumb'><a href='../../../instagram/'>Instagram</a></p>
+    <article class='card' id='post-instagram-DfUNGj8FOdu' data-site='instagram'>
+      <div class='mark instagram' aria-hidden='true'>IG</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>@yua_mikami</strong>
+          <a class='tag instagram' href='../../../instagram/'>Instagram</a>
+          <span class='kind'>Post</span>
+          <time datetime='2026-11-04T10:07:13.000Z'>2026-11-04 10:07</time>
+        </header>
+        <p class='text'>本日から
+ナイトブラ全サイズ再販開始しました🪄
+
+完売してたサイズも追加されてます🤍
+
+そして新色のモカが登場したよ👶🏻
+秋冬っぽいカラーでとっても可愛いの🌰
+ぜひこの機会にゲットしてね🫶🏻
+
+@mieloa_official</p>
+        <div class='shots n2'><a href='https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/887040332_18578640124073317_2623446656558231942_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ig_cache_key=NDAyMjg5NjQ4MTE1OTA4NDgyNg%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=PJIH6E_UNhkQ7kNvwGcD8ZG&amp;_nc_oc=Ado1BOFuZpOv8G_OTdEU273byKbETyY35Ta7xV-lhgBJe7E-F4Lpop6bc2yC_uIsfhc&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_gid=fFyv-YBmxDMYSFpt6mLSjg&amp;_nc_ss=7a20f&amp;oh=00_AQS1Lv0Q_ikX45afb-1rwatPkzct61Bp50GU5mQfIoGpCg&amp;oe=6AF236F9'><img src='https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/887040332_18578640124073317_2623446656558231942_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ig_cache_key=NDAyMjg5NjQ4MTE1OTA4NDgyNg%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=PJIH6E_UNhkQ7kNvwGcD8ZG&amp;_nc_oc=Ado1BOFuZpOv8G_OTdEU273byKbETyY35Ta7xV-lhgBJe7E-F4Lpop6bc2yC_uIsfhc&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_gid=fFyv-YBmxDMYSFpt6mLSjg&amp;_nc_ss=7a20f&amp;oh=00_AQS1Lv0Q_ikX45afb-1rwatPkzct61Bp50GU5mQfIoGpCg&amp;oe=6AF236F9' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/888290191_18578640142073317_7122108758461713191_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ig_cache_key=NDAyMjg5NjQ4MTkwNTY1NTk1NQ%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=uW63L16HZrEQ7kNvwGftVbf&amp;_nc_oc=AdouhSSO7GYfn2D2qPKEnca9ppiP7TF9k1WYjNyJjjMuZyLL7BS8RrvuuVlfLSPWudA&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_gid=fFyv-YBmxDMYSFpt6mLSjg&amp;_nc_ss=7a20f&amp;oh=00_AQQtSYD0BsWiCWnubl_MHefIqPoN0EHmaCB9VEbv3SYhrg&amp;oe=6AF24183'><img src='https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/888290191_18578640142073317_7122108758461713191_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;ig_cache_key=NDAyMjg5NjQ4MTkwNTY1NTk1NQ%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=uW63L16HZrEQ7kNvwGftVbf&amp;_nc_oc=AdouhSSO7GYfn2D2qPKEnca9ppiP7TF9k1WYjNyJjjMuZyLL7BS8RrvuuVlfLSPWudA&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_gid=fFyv-YBmxDMYSFpt6mLSjg&amp;_nc_ss=7a20f&amp;oh=00_AQQtSYD0BsWiCWnubl_MHefIqPoN0EHmaCB9VEbv3SYhrg&amp;oe=6AF24183' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/886940971_18578640133073317_6588159308729454876_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ig_cache_key=NDAyMjg5NjQ4MjIzMjY5NDAxNA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=a1zbqFuA_-UQ7kNvwG7NcaV&amp;_nc_oc=AdoUz5bQlNnifEDLvLpiTFhfZsUrL7V4ep9_q56hU8DNzbTf9uzQlixjwEBDVHdx0ro&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_gid=fFyv-YBmxDMYSFpt6mLSjg&amp;_nc_ss=7a20f&amp;oh=00_AQRmhGv6UGyRyLibADba5wKozsdcqQK2Syn2GURGzwCOdw&amp;oe=6AF25473'><img src='https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/886940971_18578640133073317_6588159308729454876_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=105&amp;ig_cache_key=NDAyMjg5NjQ4MjIzMjY5NDAxNA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=a1zbqFuA_-UQ7kNvwG7NcaV&amp;_nc_oc=AdoUz5bQlNnifEDLvLpiTFhfZsUrL7V4ep9_q56hU8DNzbTf9uzQlixjwEBDVHdx0ro&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_gid=fFyv-YBmxDMYSFpt6mLSjg&amp;_nc_ss=7a20f&amp;oh=00_AQRmhGv6UGyRyLibADba5wKozsdcqQK2Syn2GURGzwCOdw&amp;oe=6AF25473' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/886594922_18578640154073317_3603929314120771343_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ig_cache_key=NDAyMjg5NjQ4MzcxNzU2NzI3MQ%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTE5NS5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=FjSF20slaW8Q7kNvwFj8zKJ&amp;_nc_oc=AdpDsiWGJx0I2Kze-zg0V0cc_xMpEZ-89RI4P32dmD9_4BZP9ED-azsisgdWrRahpjM&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_gid=fFyv-YBmxDMYSFpt6mLSjg&amp;_nc_ss=7a20f&amp;oh=00_AQSQLSoBeUCpiM_PWKanc6sbdiBGB3YyrgtL8fimBeMlNw&amp;oe=6AF23A4D'><img src='https://scontent-ssn1-1.cdninstagram.com/v/t51.82787-15/886594922_18578640154073317_3603929314120771343_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=101&amp;ig_cache_key=NDAyMjg5NjQ4MzcxNzU2NzI3MQ%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTE5NS5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=FjSF20slaW8Q7kNvwFj8zKJ&amp;_nc_oc=AdpDsiWGJx0I2Kze-zg0V0cc_xMpEZ-89RI4P32dmD9_4BZP9ED-azsisgdWrRahpjM&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=scontent-ssn1-1.cdninstagram.com&amp;_nc_gid=fFyv-YBmxDMYSFpt6mLSjg&amp;_nc_ss=7a20f&amp;oh=00_AQSQLSoBeUCpiM_PWKanc6sbdiBGB3YyrgtL8fimBeMlNw&amp;oe=6AF23A4D' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.instagram.com/p/DfUNGj8FOdu/'>Open original</a></p>
+      </div>
+    </article>
+    <h2 class='split'>Same media on another source</h2><p class='quiet'>No other stored post points at this one.</p>
+</div>
+</body>
+</html>

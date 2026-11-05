@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🏰 · 三上悠亜</title>
+<style>
+:root {
+  --ink: #1c1915;
+  --muted: #5e584f;
+  --line: #ddd6c8;
+  --paper: #f6f1e7;
+  --card: #fffdf8;
+  --bar: #241f1a;
+  --seal: #8d2f2a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 16px/1.5 "Hiragino Sans", "Yu Gothic", "Noto Sans JP", sans-serif;
+}
+a { color: var(--seal); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-offset: 2px; }
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--bar);
+  color: var(--paper);
+}
+.top-inner { max-width: 640px; margin: 0 auto; padding: 12px 16px 0; }
+.brand { color: inherit; text-decoration: none; font-weight: 650; font-size: 18px; }
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2px;
+  padding: 6px 0 0;
+}
+.filters a {
+  flex: 0 0 auto;
+  color: #f6f1e7;
+  text-decoration: none;
+  padding: 8px 10px 10px;
+  font-size: 14px;
+  border-bottom: 2px solid transparent;
+}
+.filters a[aria-current="page"] { border-bottom-color: #f6f1e7; font-weight: 650; }
+.filters .count { color: #c8bfb2; font-size: 12px; margin-left: 4px; }
+.wrap { max-width: 640px; margin: 0 auto; padding: 14px 16px 64px; }
+.whoami {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+.whoami strong { color: var(--ink); font-size: 18px; font-weight: 650; }
+.crumb { margin: 0 0 8px; font-size: 14px; }
+.note, .miss {
+  background: #fff8e8;
+  border: 1px solid #e4d3a4;
+  padding: 10px 12px;
+  margin: 8px 0 12px;
+}
+.quiet { color: var(--muted); }
+.feed { display: flex; flex-direction: column; }
+.card {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.mark {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  background: var(--bar);
+  color: var(--paper);
+  font-size: 13px;
+  font-weight: 700;
+}
+.mark.youtube { background: #8d2f2a; }
+.mark.x { background: #1c1915; }
+.mark.oshiseku { background: #6b5344; }
+.mark.javforum { background: #3e5344; }
+.mark.avfan { background: #3e4a5c; }
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: baseline;
+}
+.head strong { font-weight: 650; }
+.head time { margin-left: auto; color: var(--muted); font-size: 13px; }
+.kind { color: var(--muted); font-size: 13px; }
+.tag {
+  display: inline-block;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 0 6px;
+}
+.tag.youtube { color: #8d2f2a; border-color: #e2c4c1; }
+.tag.x { color: #1c1915; }
+.tag.oshiseku { color: #6b5344; border-color: #e0d2c6; }
+.tag.javforum { color: #3e5344; border-color: #cdd6ce; }
+.tag.avfan { color: #3e4a5c; border-color: #cfd5de; }
+.text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin: 8px 0;
+}
+.shots {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0;
+}
+.shots.n1 { grid-template-columns: minmax(0, 1fr); }
+.shots.n2, .shots.n3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.shots.n3 a:first-child { grid-column: 1 / -1; }
+.shots a {
+  display: block;
+  min-width: 0;
+  border: 1px solid var(--line);
+  background: var(--bar);
+}
+.shots img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.media {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: inherit;
+  text-decoration: none;
+  margin: 8px 0;
+  min-width: 0;
+}
+.media img {
+  width: 100%;
+  height: 100%;
+  min-height: 94px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--bar);
+  display: block;
+}
+.media.work { grid-template-columns: 112px minmax(0, 1fr); }
+.media.plain { grid-template-columns: minmax(0, 1fr); }
+.code {
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  background: var(--bar);
+  color: var(--paper);
+  font-weight: 700;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.media-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+.media-copy strong { overflow-wrap: anywhere; }
+.domain { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.also, .links { margin: 4px 0 0; font-size: 14px; }
+.also a, .links a { margin-right: 10px; }
+.split { font-size: 15px; font-weight: 650; margin: 18px 0 0; }
+@media (max-width: 720px) {
+  .head time { margin-left: 0; }
+  .media, .media.work { grid-template-columns: minmax(0, 1fr); }
+  .code { min-height: 56px; }
+}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="top-inner">
+    <a class="brand" href="../../../">三上悠亜</a>
+    <nav class='filters' aria-label='Source'><a href='../../../'>All<span class='count'>80</span></a><a href='../../../youtube/'>YouTube<span class='count'>15</span></a><a href='../../../x/'>X<span class='count'>5</span></a><a href='../../../oshiseku/'>Oshiseku<span class='count'>14</span></a><a href='../../../javforum/'>Jav-forum<span class='count'>26</span></a><a href='../../../avfan/'>avfan<span class='count'>10</span></a><a href='../../../tiktok/'>TikTok<span class='count'>5</span></a><a href='../../../instagram/' aria-current='page'>Instagram<span class='count'>5</span></a></nav>
+  </div>
+</div>
+<div class="wrap">
+<p class='crumb'><a href='../../../instagram/'>Instagram</a></p>
+    <article class='card' id='post-instagram-DfWxQ_9FJbf' data-site='instagram'>
+      <div class='mark instagram' aria-hidden='true'>IG</div>
+      <div class='main'>
+        <header class='head'>
+          <strong>@yua_mikami</strong>
+          <a class='tag instagram' href='../../../instagram/'>Instagram</a>
+          <span class='kind'>Post</span>
+          <time datetime='2026-11-05T10:01:42.000Z'>2026-11-05 10:01</time>
+        </header>
+        <p class='text'>🏰
+
+写真いっぱいになっちゃった👶🏻📷
+全身おそろいで可愛い🤎
+
+明日(11/6)発売のアウターとセットアップ🧥
+どちらも展示会でも大人気だったアイテム♡
+ブラウン双子おすすめです🫶🏻
+
+#ディズニー
+#ディズニーランド #disneyland 
+#ハロウィンディズニー</p>
+        <div class='shots n2'><a href='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/890057239_18578953537073317_9205820692181798936_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=1&amp;ig_cache_key=NDAyMzYxODMwMzM4NzIxMDY1NA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=ABLwv7E1KK4Q7kNvwEiUF1R&amp;_nc_oc=Ado0wbIk7HgU073l37_3gctB_bYtT7e9xY3CaGkC9p2daEDSULHbBsdgZEBOfWfDieE&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQRauZrG_kv4U8xs4YL4WwmIyV0Y0-_OTXs3h0ohTq2o8Q&amp;oe=6AF25A8F'><img src='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/890057239_18578953537073317_9205820692181798936_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=1&amp;ig_cache_key=NDAyMzYxODMwMzM4NzIxMDY1NA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=ABLwv7E1KK4Q7kNvwEiUF1R&amp;_nc_oc=Ado0wbIk7HgU073l37_3gctB_bYtT7e9xY3CaGkC9p2daEDSULHbBsdgZEBOfWfDieE&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQRauZrG_kv4U8xs4YL4WwmIyV0Y0-_OTXs3h0ohTq2o8Q&amp;oe=6AF25A8F' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/888351291_18578953528073317_3279354066855868130_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=1&amp;ig_cache_key=NDAyMzYxODMwODcyMjE0Mjc2Nw%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=qOgZpMiQWRkQ7kNvwF-NeXP&amp;_nc_oc=Ado5bV79plnE-AFg2-tiaccI_9YvdWCtqU1yAjD1i9EU4N-yLVAKuMZo1LFGAqE662Y&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQTppZiRyzU1gKiVxdhr1WYr4NPxOxDYdlbr2qIG0eAQ7g&amp;oe=6AF2662A'><img src='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/888351291_18578953528073317_3279354066855868130_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=1&amp;ig_cache_key=NDAyMzYxODMwODcyMjE0Mjc2Nw%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=qOgZpMiQWRkQ7kNvwF-NeXP&amp;_nc_oc=Ado5bV79plnE-AFg2-tiaccI_9YvdWCtqU1yAjD1i9EU4N-yLVAKuMZo1LFGAqE662Y&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQTppZiRyzU1gKiVxdhr1WYr4NPxOxDYdlbr2qIG0eAQ7g&amp;oe=6AF2662A' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/888711484_18578953546073317_3139641536124433797_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=1&amp;ig_cache_key=NDAyMzYxODMwOTc3MDg4MTU0NA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjQ0NS5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=XoIEy36zsLMQ7kNvwGCq1HD&amp;_nc_oc=Adq6N3WGrDiE5pZc1PWE8IB0rnFRBbGg0DdxfqC9GVzXCYFIGDAhc9JlhJDTzfKxOxw&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQS7rU156eAudlA546s3KQFEn4VxAkcEC24P_f7jmmNnsw&amp;oe=6AF2604F'><img src='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/888711484_18578953546073317_3139641536124433797_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=1&amp;ig_cache_key=NDAyMzYxODMwOTc3MDg4MTU0NA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMjQ0NS5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=XoIEy36zsLMQ7kNvwGCq1HD&amp;_nc_oc=Adq6N3WGrDiE5pZc1PWE8IB0rnFRBbGg0DdxfqC9GVzXCYFIGDAhc9JlhJDTzfKxOxw&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQS7rU156eAudlA546s3KQFEn4VxAkcEC24P_f7jmmNnsw&amp;oe=6AF2604F' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/890496174_18578953567073317_7860933911837073713_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODMxMjQ3MTg3NzU3MA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=fh_lhMMcBmIQ7kNvwExyizA&amp;_nc_oc=AdoUg_YAijX9e5YsI6OVVAs_CZE4XlHYJuQbwaSrgH4QFAtVwYFg0HIi-wqA_A-gM2M&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQQi2Qmkz_7pX66GXTvfiaQ9h9d56-KKAG2sL_i6kYL8Aw&amp;oe=6AF24657'><img src='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/890496174_18578953567073317_7860933911837073713_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODMxMjQ3MTg3NzU3MA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTI4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=fh_lhMMcBmIQ7kNvwExyizA&amp;_nc_oc=AdoUg_YAijX9e5YsI6OVVAs_CZE4XlHYJuQbwaSrgH4QFAtVwYFg0HIi-wqA_A-gM2M&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQQi2Qmkz_7pX66GXTvfiaQ9h9d56-KKAG2sL_i6kYL8Aw&amp;oe=6AF24657' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://instagram.fmel3-1.fna.fbcdn.net/v/t51.82787-15/892291890_18578953579073317_8318486229417489567_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODMxMzg4OTYwMzU4Mg%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=1H81ZBYLwzgQ7kNvwHRr-R1&amp;_nc_oc=Adr1f3aOQnEdigqnl5j_yS1MATUQ0tBmLGGRVI24zNQJy8_UICoS-iAgHGZaF5jKdfQ&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel3-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQTtdfkCgTgqulXlwq1HIc-ovN0iUamitUcsyCA-MtZXqA&amp;oe=6AF23F30'><img src='https://instagram.fmel3-1.fna.fbcdn.net/v/t51.82787-15/892291890_18578953579073317_8318486229417489567_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=107&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODMxMzg4OTYwMzU4Mg%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=1H81ZBYLwzgQ7kNvwHRr-R1&amp;_nc_oc=Adr1f3aOQnEdigqnl5j_yS1MATUQ0tBmLGGRVI24zNQJy8_UICoS-iAgHGZaF5jKdfQ&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel3-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQTtdfkCgTgqulXlwq1HIc-ovN0iUamitUcsyCA-MtZXqA&amp;oe=6AF23F30' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/892176294_18578953762073317_1149151805018190603_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODM0MjMwMTc5NDQwNA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzAyNC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=lepyUVEQHnIQ7kNvwETPHQk&amp;_nc_oc=Adq3sUpijxHB9GDq3eMIOC-zPGZZkCHthiFSKnpcR-cVJRtbwvEsQW5xNum06U__SFg&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQQwOWDcAUbUFhQxyNzqYHe2EJ6_HYBJlrEL37xl3OqbWQ&amp;oe=6AF25949'><img src='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/892176294_18578953762073317_1149151805018190603_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=109&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODM0MjMwMTc5NDQwNA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzAyNC5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=lepyUVEQHnIQ7kNvwETPHQk&amp;_nc_oc=Adq3sUpijxHB9GDq3eMIOC-zPGZZkCHthiFSKnpcR-cVJRtbwvEsQW5xNum06U__SFg&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQQwOWDcAUbUFhQxyNzqYHe2EJ6_HYBJlrEL37xl3OqbWQ&amp;oe=6AF25949' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://instagram.fmel3-1.fna.fbcdn.net/v/t51.82787-15/887016858_18578953639073317_6133984066367309968_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODMyMDI5MDAyNDE5OA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=Qp21Bh-T9scQ7kNvwEe2CLo&amp;_nc_oc=AdoIlkf5b6tukjkysMWzqGral8-kjaOi_XUKVA8CEElHULHvYDqMZJeBxaQwpqasfEU&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel3-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQQkH2MNQHTkzQdXcEhjSUi4MCjkjh1nFNLo0n5fe5T-aA&amp;oe=6AF247EA'><img src='https://instagram.fmel3-1.fna.fbcdn.net/v/t51.82787-15/887016858_18578953639073317_6133984066367309968_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=103&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODMyMDI5MDAyNDE5OA%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMzA3Mi5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=Qp21Bh-T9scQ7kNvwEe2CLo&amp;_nc_oc=AdoIlkf5b6tukjkysMWzqGral8-kjaOi_XUKVA8CEElHULHvYDqMZJeBxaQwpqasfEU&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel3-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQQkH2MNQHTkzQdXcEhjSUi4MCjkjh1nFNLo0n5fe5T-aA&amp;oe=6AF247EA' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a><a href='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/889977856_18578953663073317_8542123460396284832_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODMyNDc5NDczNDI4Mw%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTkzMS5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=UIjqMKUAcFsQ7kNvwEAsj7u&amp;_nc_oc=AdrHzUrwhKRUkb1OLm2Y9vyGNcdWvRU7eIrGPaZLsfQvqjMYm698EsgKfLxG3O6rlhk&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQRMgUCBKt0KtuHv2EYPiqTcPYCbBDbRkgyGVtN08-wXLA&amp;oe=6AF24FCC'><img src='https://instagram.fmel10-1.fna.fbcdn.net/v/t51.82787-15/889977856_18578953663073317_8542123460396284832_n.jpg?stp=dst-jpg_e35_tt6&amp;_nc_cat=110&amp;_nc_map=urlgen_bucketless&amp;ig_cache_key=NDAyMzYxODMyNDc5NDczNDI4Mw%3D%3D.3-ccb7-5&amp;ccb=7-5&amp;_nc_sid=58cdad&amp;efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTkzMS5zZHIucmVndWxhcl9waG90by5DMyJ9&amp;_nc_ohc=UIjqMKUAcFsQ7kNvwEAsj7u&amp;_nc_oc=AdrHzUrwhKRUkb1OLm2Y9vyGNcdWvRU7eIrGPaZLsfQvqjMYm698EsgKfLxG3O6rlhk&amp;_nc_ad=z-m&amp;_nc_cid=0&amp;_nc_zt=23&amp;_nc_ht=instagram.fmel10-1.fna&amp;_nc_gid=3i0syIcSQkcJE6U0pxM03A&amp;_nc_ss=7a20f&amp;oh=00_AQRMgUCBKt0KtuHv2EYPiqTcPYCbBDbRkgyGVtN08-wXLA&amp;oe=6AF24FCC' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        
+        <p class='links'><a href='https://www.instagram.com/p/DfWxQ_9FJbf/'>Open original</a></p>
+      </div>
+    </article>
+    <h2 class='split'>Same media on another source</h2><p class='quiet'>No other stored post points at this one.</p>
+</div>
+</body>
+</html>
