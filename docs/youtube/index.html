@@ -132,11 +132,65 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
   border: 1px solid var(--line);
   background: var(--bar);
 }
-.shots img {
+.shots img, .shots video {
   width: 100%;
   height: auto;
   display: block;
+  background: var(--bar);
 }
+.shots a.video, .shots .video {
+  position: relative;
+}
+.play {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(28, 25, 21, .82);
+  color: var(--paper);
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 2px 8px;
+}
+.player {
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  background: var(--bar);
+}
+.player iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+.player-caption {
+  display: block;
+  padding: 8px 10px;
+  color: var(--paper);
+  text-decoration: none;
+}
+.clip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--bar);
+  color: var(--paper);
+  text-decoration: none;
+}
+.clip .markplay {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--paper);
+  border-radius: 50%;
+  font-size: 12px;
+}
+.clip span:last-child { display: block; }
+.clip small { color: #c8bfb2; }
 .media {
   display: grid;
   grid-template-columns: 168px minmax(0, 1fr);
@@ -208,7 +262,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
         </header>
         <p class='text'>▼プロデュースナイトブラはこちら🫶🏻
 https://d-rw.com/page/mieloa?pid&amp;utm_source=Instagram&amp;utm_medium=mieloastory&amp;utm_campaign=261023&amp;fbclid=PAdGRleAVIBnVleHRuA2FlbQIxMQBwZG9mAmZkaWQWUQ3uIV8NtlbXaUkw2uQRfDYvAUtoPnNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABpyKYY6…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=qMiB9O2YZWo'><img src='https://i.ytimg.com/vi/qMiB9O2YZWo/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【サウナ】私の最近の美容法全部答えていく‼️</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/qMiB9O2YZWo' title='【サウナ】私の最近の美容法全部答えていく‼️' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=qMiB9O2YZWo'>【サウナ】私の最近の美容法全部答えていく‼️</a></div>
         <p class='also'>Same video on X <a href='../t/x/2117909710221561936/'>2026-11-04 09:19</a><a href='../t/x/2117578112439550131/'>2026-11-03 11:22</a></p>
         <p class='links'><a href='https://www.youtube.com/watch?v=qMiB9O2YZWo'>Open original</a></p>
       </div>
@@ -234,7 +288,7 @@ https://d-rw.com/page/mieloa?pid&amp;utm_source=Instagram&amp;utm_medium=mieloas
 ♡プロデュースブランド
 【MISTREASS】
 https://www.instagram.com/m…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=jTiGzSQcplw'><img src='https://i.ytimg.com/vi/jTiGzSQcplw/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【悲報】お別れがつらすぎるのでマック爆食していきます。</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/jTiGzSQcplw' title='【悲報】お別れがつらすぎるのでマック爆食していきます。' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=jTiGzSQcplw'>【悲報】お別れがつらすぎるのでマック爆食していきます。</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=jTiGzSQcplw'>Open original</a></p>
       </div>
@@ -264,7 +318,7 @@ LIGHT BOX ATELIER / ライトボックスアトリエ
 
 【チケット制】
 10/31（土）12:00–17:00（全…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=xAqzwMz5WFI'><img src='https://i.ytimg.com/vi/xAqzwMz5WFI/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【LOOK BOOK】この冬絶対にモテる！あざとお姉さん9コーデ🫶🏻</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/xAqzwMz5WFI' title='【LOOK BOOK】この冬絶対にモテる！あざとお姉さん9コーデ🫶🏻' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=xAqzwMz5WFI'>【LOOK BOOK】この冬絶対にモテる！あざとお姉さん9コーデ🫶🏻</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=xAqzwMz5WFI'>Open original</a></p>
       </div>
@@ -290,7 +344,7 @@ LIGHT BOX ATELIER / ライトボックスアトリエ
 ♡プロデュースブランド
 【MISTREASS】
 https://www.instagram.com/m…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=zxzlwwoWLls'><img src='https://i.ytimg.com/vi/zxzlwwoWLls/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【美容VLOG】私の行きつけサロンでメンテナンス1日密着🪄</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/zxzlwwoWLls' title='【美容VLOG】私の行きつけサロンでメンテナンス1日密着🪄' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=zxzlwwoWLls'>【美容VLOG】私の行きつけサロンでメンテナンス1日密着🪄</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=zxzlwwoWLls'>Open original</a></p>
       </div>
@@ -320,7 +374,7 @@ https://www.instagram.com/m…</p>
 【SNS情報】
 ♡X⇨https://x.com/yua_mikami?s=21
 ♡Instagram⇨https://www.instagram.com/yua_mikami?igsh=MTU4Z…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=T-0rs2PZtu0'><img src='https://i.ytimg.com/vi/T-0rs2PZtu0/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【秋メイク】流行りのモルモルメイクしたら過去一盛れた！！🍂</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/T-0rs2PZtu0' title='【秋メイク】流行りのモルモルメイクしたら過去一盛れた！！🍂' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=T-0rs2PZtu0'>【秋メイク】流行りのモルモルメイクしたら過去一盛れた！！🍂</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=T-0rs2PZtu0'>Open original</a></p>
       </div>
@@ -346,7 +400,7 @@ https://www.instagram.com/m…</p>
 ♡プロデュースブランド
 【MISTREASS】
 https://www.instagram.com/m…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=78q9Kp9v_o4'><img src='https://i.ytimg.com/vi/78q9Kp9v_o4/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【ZARA購入品】ZARAで秋服購入したので全部紹介します！</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/78q9Kp9v_o4' title='【ZARA購入品】ZARAで秋服購入したので全部紹介します！' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=78q9Kp9v_o4'>【ZARA購入品】ZARAで秋服購入したので全部紹介します！</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=78q9Kp9v_o4'>Open original</a></p>
       </div>
@@ -372,7 +426,7 @@ https://www.instagram.com/m…</p>
 ♡プロデュースブランド
 【MISTREASS】
 https://www.instagram.com/m…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=wlDfVV5RigU'><img src='https://i.ytimg.com/vi/wlDfVV5RigU/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>深夜に初山岡家に参戦してきた‼️‼️</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/wlDfVV5RigU' title='深夜に初山岡家に参戦してきた‼️‼️' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=wlDfVV5RigU'>深夜に初山岡家に参戦してきた‼️‼️</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=wlDfVV5RigU'>Open original</a></p>
       </div>
@@ -398,7 +452,7 @@ https://www.instagram.com/m…</p>
 ♡プロデュースブランド
 【MISTREASS】
 https://www.instagram.com/m…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=W0X2qtGZ0HU'><img src='https://i.ytimg.com/vi/W0X2qtGZ0HU/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【月見バーガー】各社食べ比べて今年のNo. 1決めました‼️※個人の意見です</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/W0X2qtGZ0HU' title='【月見バーガー】各社食べ比べて今年のNo. 1決めました‼️※個人の意見です' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=W0X2qtGZ0HU'>【月見バーガー】各社食べ比べて今年のNo. 1決めました‼️※個人の意見です</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=W0X2qtGZ0HU'>Open original</a></p>
       </div>
@@ -424,7 +478,7 @@ https://www.instagram.com/m…</p>
 ♡プロデュースブランド
 【MISTREASS】
 https://www.instagram.com/m…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=5vm-J6Y39S4'><img src='https://i.ytimg.com/vi/5vm-J6Y39S4/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【VLOG】韓国で2泊3日の夏休み満喫してきた🇰🇷</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/5vm-J6Y39S4' title='【VLOG】韓国で2泊3日の夏休み満喫してきた🇰🇷' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=5vm-J6Y39S4'>【VLOG】韓国で2泊3日の夏休み満喫してきた🇰🇷</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=5vm-J6Y39S4'>Open original</a></p>
       </div>
@@ -450,7 +504,7 @@ https://www.instagram.com/m…</p>
 ♡プロデュースブランド
 【MISTREASS】
 https://www.instagram.com/m…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=tphCGVLjKuI'><img src='https://i.ytimg.com/vi/tphCGVLjKuI/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【購入品】韓国で買った大当たり購入品紹介🇰🇷</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/tphCGVLjKuI' title='【購入品】韓国で買った大当たり購入品紹介🇰🇷' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=tphCGVLjKuI'>【購入品】韓国で買った大当たり購入品紹介🇰🇷</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=tphCGVLjKuI'>Open original</a></p>
       </div>
@@ -486,7 +540,7 @@ ESTHERFORMULA(エスターフォーミュラ)
 メガ割価格：¥2,600
 
 ▼ご…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=7Gi3A-l1Za8'><img src='https://i.ytimg.com/vi/7Gi3A-l1Za8/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【初公開】私が垢抜けのためにやってきたこと教えます‼️</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/7Gi3A-l1Za8' title='【初公開】私が垢抜けのためにやってきたこと教えます‼️' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=7Gi3A-l1Za8'>【初公開】私が垢抜けのためにやってきたこと教えます‼️</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=7Gi3A-l1Za8'>Open original</a></p>
       </div>
@@ -512,7 +566,7 @@ ESTHERFORMULA(エスターフォーミュラ)
 ♡プロデュースブランド
 【MISTREASS】
 https://www.instagram.com/m…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=PmVtAm5PA7w'><img src='https://i.ytimg.com/vi/PmVtAm5PA7w/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【雑談】麻辣担食べながらマネージャーと暴露大会した</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/PmVtAm5PA7w' title='【雑談】麻辣担食べながらマネージャーと暴露大会した' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=PmVtAm5PA7w'>【雑談】麻辣担食べながらマネージャーと暴露大会した</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=PmVtAm5PA7w'>Open original</a></p>
       </div>
@@ -542,7 +596,7 @@ https://www.instagram.com/m…</p>
 【SNS情報】
 ♡X⇨https://x.com/yua_mikami?s=21
 ♡Instagram⇨https://www.instagram.com/yua_mikami?igsh=MTU4ZndneWVobDh1bQ%3D%3D&amp;u…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=qEHGTxkE2Ss'><img src='https://i.ytimg.com/vi/qEHGTxkE2Ss/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【旅行VLOG】台湾を楽しみまくる！！おすすめスポットも紹介🪄</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/qEHGTxkE2Ss' title='【旅行VLOG】台湾を楽しみまくる！！おすすめスポットも紹介🪄' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=qEHGTxkE2Ss'>【旅行VLOG】台湾を楽しみまくる！！おすすめスポットも紹介🪄</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=qEHGTxkE2Ss'>Open original</a></p>
       </div>
@@ -570,7 +624,7 @@ https://www.ginzafine.com/campaign/fullmldlp_yt30/
 男性はこちら↓
 月々4,900円の全身脱毛5回 148,000円コースはYouTube限定価格です。
 https://ginzafine-men…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=L8JBECfZFe0'><img src='https://i.ytimg.com/vi/L8JBECfZFe0/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【毎日メイク】夏の定番メイクして地元帰省してきた🚅🤍</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/L8JBECfZFe0' title='【毎日メイク】夏の定番メイクして地元帰省してきた🚅🤍' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=L8JBECfZFe0'>【毎日メイク】夏の定番メイクして地元帰省してきた🚅🤍</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=L8JBECfZFe0'>Open original</a></p>
       </div>
@@ -601,7 +655,7 @@ https://d-rw.com/Page/mieloa
 【SNS情報】
 ♡X⇨https://x.com/yua_mikami?s=21
 ♡Instagram⇨https://www.instagram.com/yua…</p>
-        <a class='media' href='https://www.youtube.com/watch?v=7tR_cthd2qU'><img src='https://i.ytimg.com/vi/7tR_cthd2qU/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【保存版】私のバストケア方法、全部話します。</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='player'><iframe src='https://www.youtube-nocookie.com/embed/7tR_cthd2qU' title='【保存版】私のバストケア方法、全部話します。' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=7tR_cthd2qU'>【保存版】私のバストケア方法、全部話します。</a></div>
         
         <p class='links'><a href='https://www.youtube.com/watch?v=7tR_cthd2qU'>Open original</a></p>
       </div>

@@ -132,11 +132,65 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
   border: 1px solid var(--line);
   background: var(--bar);
 }
-.shots img {
+.shots img, .shots video {
   width: 100%;
   height: auto;
   display: block;
+  background: var(--bar);
 }
+.shots a.video, .shots .video {
+  position: relative;
+}
+.play {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(28, 25, 21, .82);
+  color: var(--paper);
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 2px 8px;
+}
+.player {
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  background: var(--bar);
+}
+.player iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+.player-caption {
+  display: block;
+  padding: 8px 10px;
+  color: var(--paper);
+  text-decoration: none;
+}
+.clip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--bar);
+  color: var(--paper);
+  text-decoration: none;
+}
+.clip .markplay {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--paper);
+  border-radius: 50%;
+  font-size: 12px;
+}
+.clip span:last-child { display: block; }
+.clip small { color: #c8bfb2; }
 .media {
   display: grid;
   grid-template-columns: 168px minmax(0, 1fr);
@@ -249,7 +303,7 @@ https://t.co/DRndqzstuc https://t.co/XpYPxpQxQu</p>
         <p class='text'>見てね🫶🏻🫶🏻
 
 https://t.co/IlKnLj5hxx https://t.co/CwZz0OsR3S</p>
-        <div class='shots n1'><a href='https://pbs.twimg.com/media/HWRTp7obgAATLDI.jpg'><img src='https://pbs.twimg.com/media/HWRTp7obgAATLDI.jpg' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div><a class='media' href='https://www.youtube.com/watch?v=qMiB9O2YZWo'><img src='https://i.ytimg.com/vi/qMiB9O2YZWo/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【サウナ】私の最近の美容法全部答えていく‼️</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='shots n1'><a href='https://pbs.twimg.com/media/HWRTp7obgAATLDI.jpg'><img src='https://pbs.twimg.com/media/HWRTp7obgAATLDI.jpg' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div><div class='player'><iframe src='https://www.youtube-nocookie.com/embed/qMiB9O2YZWo' title='【サウナ】私の最近の美容法全部答えていく‼️' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=qMiB9O2YZWo'>【サウナ】私の最近の美容法全部答えていく‼️</a></div>
         
         <p class='links'><a href='https://x.com/yua_mikami/status/2117909710221561936'>Open original</a></p>
       </div>
@@ -268,7 +322,7 @@ https://t.co/IlKnLj5hxx https://t.co/CwZz0OsR3S</p>
 全部話します‼️
 
 https://t.co/2YM0x8gqfu https://t.co/4N1grpTHJL</p>
-        <div class='shots n1'><a href='https://pbs.twimg.com/media/HWMmEf8aUAA0SBp.jpg'><img src='https://pbs.twimg.com/media/HWMmEf8aUAA0SBp.jpg' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div><a class='media' href='https://www.youtube.com/watch?v=qMiB9O2YZWo'><img src='https://i.ytimg.com/vi/qMiB9O2YZWo/hqdefault.jpg' alt='' loading='lazy'><span class='media-copy'><span class='tag youtube'>YouTube</span><strong>【サウナ】私の最近の美容法全部答えていく‼️</strong><span class='domain'>youtube.com</span></span></a>
+        <div class='shots n1'><a href='https://pbs.twimg.com/media/HWMmEf8aUAA0SBp.jpg'><img src='https://pbs.twimg.com/media/HWMmEf8aUAA0SBp.jpg' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div><div class='player'><iframe src='https://www.youtube-nocookie.com/embed/qMiB9O2YZWo' title='【サウナ】私の最近の美容法全部答えていく‼️' loading='lazy' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe><a class='player-caption' href='https://www.youtube.com/watch?v=qMiB9O2YZWo'>【サウナ】私の最近の美容法全部答えていく‼️</a></div>
         
         <p class='links'><a href='https://x.com/yua_mikami/status/2117578112439550131'>Open original</a></p>
       </div>

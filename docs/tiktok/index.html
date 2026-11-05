@@ -132,11 +132,65 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
   border: 1px solid var(--line);
   background: var(--bar);
 }
-.shots img {
+.shots img, .shots video {
   width: 100%;
   height: auto;
   display: block;
+  background: var(--bar);
 }
+.shots a.video, .shots .video {
+  position: relative;
+}
+.play {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(28, 25, 21, .82);
+  color: var(--paper);
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 2px 8px;
+}
+.player {
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  background: var(--bar);
+}
+.player iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+.player-caption {
+  display: block;
+  padding: 8px 10px;
+  color: var(--paper);
+  text-decoration: none;
+}
+.clip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--bar);
+  color: var(--paper);
+  text-decoration: none;
+}
+.clip .markplay {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--paper);
+  border-radius: 50%;
+  font-size: 12px;
+}
+.clip span:last-child { display: block; }
+.clip small { color: #c8bfb2; }
 .media {
   display: grid;
   grid-template-columns: 168px minmax(0, 1fr);
@@ -207,7 +261,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
           <time datetime='2026-11-04T10:23:25.000Z'>2026-11-04 10:23</time>
         </header>
         
-        <div class='shots n1'><a href='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/oM3PSDuB1AB73aOiiIIYYAIGCACrfd5w5II5bF~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=7OC3EpTrrQxr3QAE0X1FJ3r98XA%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5'><img src='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/oM3PSDuB1AB73aOiiIIYYAIGCACrfd5w5II5bF~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=7OC3EpTrrQxr3QAE0X1FJ3r98XA%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        <div class='shots n1'><a class='video' href='https://www.tiktok.com/@yua_mikami/video/7704259924980731144'><img src='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/oM3PSDuB1AB73aOiiIIYYAIGCACrfd5w5II5bF~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=7OC3EpTrrQxr3QAE0X1FJ3r98XA%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Video' loading='lazy' referrerpolicy='no-referrer'><span class='play'>Video 0:12</span></a></div>
         
         <p class='links'><a href='https://www.tiktok.com/@yua_mikami/video/7704259924980731144'>Open original</a></p>
       </div>
@@ -223,7 +277,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
           <time datetime='2026-10-31T11:48:08.000Z'>2026-10-31 11:48</time>
         </header>
         <p class='text'>一応ハロウィンぽいやつも👶🏻#Halloween</p>
-        <div class='shots n1'><a href='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/o8YXrBxplumAuVIaFHIVWAi1XPAEIIY1YiBrB~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=Cwa4lJVERvpDzaNSk4PP%2Fv7hn9k%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5'><img src='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/o8YXrBxplumAuVIaFHIVWAi1XPAEIIY1YiBrB~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=Cwa4lJVERvpDzaNSk4PP%2Fv7hn9k%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        <div class='shots n1'><a class='video' href='https://www.tiktok.com/@yua_mikami/video/7702797421432016135'><img src='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/o8YXrBxplumAuVIaFHIVWAi1XPAEIIY1YiBrB~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=Cwa4lJVERvpDzaNSk4PP%2Fv7hn9k%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Video' loading='lazy' referrerpolicy='no-referrer'><span class='play'>Video 0:11</span></a></div>
         
         <p class='links'><a href='https://www.tiktok.com/@yua_mikami/video/7702797421432016135'>Open original</a></p>
       </div>
@@ -239,7 +293,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
           <time datetime='2022-03-22T07:25:39.000Z'>2022-03-22 07:25</time>
         </header>
         <p class='text'>😂</p>
-        <div class='shots n1'><a href='https://p16-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/2fa93804646247d899bf53ef09ebd023_1647933949~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=3GwnW7AVjiHPOmxg82bTxJF57DY%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5'><img src='https://p16-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/2fa93804646247d899bf53ef09ebd023_1647933949~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=3GwnW7AVjiHPOmxg82bTxJF57DY%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        <div class='shots n1'><a class='video' href='https://www.tiktok.com/@yua_mikami/video/7077822368177065218'><img src='https://p16-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/2fa93804646247d899bf53ef09ebd023_1647933949~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=3GwnW7AVjiHPOmxg82bTxJF57DY%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Video' loading='lazy' referrerpolicy='no-referrer'><span class='play'>Video 0:12</span></a></div>
         
         <p class='links'><a href='https://www.tiktok.com/@yua_mikami/video/7077822368177065218'>Open original</a></p>
       </div>
@@ -255,7 +309,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
           <time datetime='2021-08-05T11:49:29.000Z'>2021-08-05 11:49</time>
         </header>
         <p class='text'>おいっておいで、、とは#流しそうめん</p>
-        <div class='shots n1'><a href='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/91e639de965b4ffb9fb95034b610fc90_1628164171~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=7HIgbtnMKmDMKkkallhukOKKwC0%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5'><img src='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/91e639de965b4ffb9fb95034b610fc90_1628164171~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=7HIgbtnMKmDMKkkallhukOKKwC0%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        <div class='shots n1'><a class='video' href='https://www.tiktok.com/@yua_mikami/video/6992911855450623233'><img src='https://p19-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/91e639de965b4ffb9fb95034b610fc90_1628164171~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=7HIgbtnMKmDMKkkallhukOKKwC0%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Video' loading='lazy' referrerpolicy='no-referrer'><span class='play'>Video 0:14</span></a></div>
         
         <p class='links'><a href='https://www.tiktok.com/@yua_mikami/video/6992911855450623233'>Open original</a></p>
       </div>
@@ -271,7 +325,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
           <time datetime='2021-03-30T09:02:03.000Z'>2021-03-30 09:02</time>
         </header>
         <p class='text'>制服です。</p>
-        <div class='shots n1'><a href='https://p16-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/912f66f43503451ab858bc9c9d5af7e3~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=4INM3pWsOfJpWfnfTJMrE5ZdzU8%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5'><img src='https://p16-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/912f66f43503451ab858bc9c9d5af7e3~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=4INM3pWsOfJpWfnfTJMrE5ZdzU8%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Photo' loading='lazy' referrerpolicy='no-referrer'></a></div>
+        <div class='shots n1'><a class='video' href='https://www.tiktok.com/@yua_mikami/video/6945369795512552705'><img src='https://p16-common-sign.tiktokcdn-us.com/tos-alisg-p-0037/912f66f43503451ab858bc9c9d5af7e3~tplv-tiktokx-origin.image?dr=9636&amp;x-expires=1794052800&amp;x-signature=4INM3pWsOfJpWfnfTJMrE5ZdzU8%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=useast5' alt='Video' loading='lazy' referrerpolicy='no-referrer'><span class='play'>Video 0:15</span></a></div>
         
         <p class='links'><a href='https://www.tiktok.com/@yua_mikami/video/6945369795512552705'>Open original</a></p>
       </div>

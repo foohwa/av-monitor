@@ -334,11 +334,65 @@ a:focus-visible, button:focus-visible {{ outline: 2px solid var(--seal); outline
   border: 1px solid var(--line);
   background: var(--bar);
 }}
-.shots img {{
+.shots img, .shots video {{
   width: 100%;
   height: auto;
   display: block;
+  background: var(--bar);
 }}
+.shots a.video, .shots .video {{
+  position: relative;
+}}
+.play {{
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(28, 25, 21, .82);
+  color: var(--paper);
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 2px 8px;
+}}
+.player {{
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  background: var(--bar);
+}}
+.player iframe {{
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}}
+.player-caption {{
+  display: block;
+  padding: 8px 10px;
+  color: var(--paper);
+  text-decoration: none;
+}}
+.clip {{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--bar);
+  color: var(--paper);
+  text-decoration: none;
+}}
+.clip .markplay {{
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--paper);
+  border-radius: 50%;
+  font-size: 12px;
+}}
+.clip span:last-child {{ display: block; }}
+.clip small {{ color: #c8bfb2; }}
 .media {{
   display: grid;
   grid-template-columns: 168px minmax(0, 1fr);
@@ -516,19 +570,18 @@ def _body_text(row) -> str:
 
 
 def _media_html(row, extra: dict, data: dict) -> str:
-    parts: list[str] = []
-    images = _image_urls(extra.get("images"))
-    if images:
-        parts.append(_shots_html(images))
     site = row["site"]
     if site == "youtube":
-        parts.append(_yt_media(row["external_id"], row["title"] or row["external_id"], row["url"]))
-        return "".join(parts)
+        return _yt_player(row["external_id"], row["title"] or row["external_id"], row["url"])
+    parts: list[str] = []
+    gallery = _gallery_html(_fit_media(_media_items(extra)))
+    if gallery:
+        parts.append(gallery)
     video = _youtube_id(row["outbound_url"] or "")
     if video:
         known = data["videos"].get(video)
         title = known["title"] if known and known["title"] else video
-        parts.append(_yt_media(video, title, f"https://www.youtube.com/watch?v={video}"))
+        parts.append(_yt_player(video, title, f"https://www.youtube.com/watch?v={video}"))
         return "".join(parts)
     if row["outbound_url"]:
         parts.append(
@@ -539,6 +592,8 @@ def _media_html(row, extra: dict, data: dict) -> str:
         code = str(extra.get("code_key") or "No code")
         parts.append(_work_media(row["url"], code, row["title"] or row["external_id"], site))
         return "".join(parts)
+    if extra.get("clip"):
+        parts.append(_clip_html(row["url"]))
     if parts:
         return "".join(parts)
     if site == "x" and "t.co/" in (row["body"] or ""):
@@ -573,27 +628,110 @@ def _image_urls(value) -> list[str]:
     return urls
 
 
-def _shots_html(urls: list[str]) -> str:
-    kind = "n1" if len(urls) == 1 else "n3" if len(urls) == 3 else "n2"
-    imgs = "".join(
+def _media_items(extra: dict) -> list[dict]:
+    raw = extra.get("media")
+    if isinstance(raw, list) and raw:
+        items = []
+        for item in raw:
+            if not isinstance(item, dict):
+                continue
+            kind = item.get("kind")
+            if kind == "image" and isinstance(item.get("url"), str):
+                items.append(item)
+            elif kind == "video":
+                items.append(item)
+        if items:
+            return items
+    return [{"kind": "image", "url": url} for url in _image_urls(extra.get("images"))]
+
+
+def _fit_media(items: list[dict], limit: int = 8) -> list[dict]:
+    kept = list(items)
+    while len(kept) > limit:
+        image_at = next((index for index in range(len(kept) - 1, -1, -1) if kept[index].get("kind") == "image"), None)
+        if image_at is None:
+            kept.pop()
+        else:
+            kept.pop(image_at)
+    return kept
+
+
+def _gallery_html(items: list[dict]) -> str:
+    if not items:
+        return ""
+    kind = "n1" if len(items) == 1 else "n3" if len(items) == 3 else "n2"
+    cells = "".join(_gallery_cell(item) for item in items)
+    if not cells:
+        return ""
+    return f"<div class='shots {kind}'>{cells}</div>"
+
+
+def _gallery_cell(item: dict) -> str:
+    if item.get("kind") == "video":
+        poster = item.get("poster") if isinstance(item.get("poster"), str) else ""
+        play = item.get("play") if isinstance(item.get("play"), str) else ""
+        href = item.get("href") if isinstance(item.get("href"), str) else ""
+        if play.startswith("https://") and not _blocked_video(play):
+            poster_attr = f" poster='{escape(poster)}'" if poster.startswith("https://") else ""
+            return (
+                "<div class='video'>"
+                f"<video controls playsinline preload='none' referrerpolicy='no-referrer'{poster_attr}>"
+                f"<source src='{escape(play)}'>"
+                "</video>"
+                "<span class='play'>Video</span>"
+                "</div>"
+            )
+        if poster.startswith("https://"):
+            target = href if href.startswith("https://") else poster
+            seconds = item.get("seconds")
+            label = "Video"
+            if isinstance(seconds, int) and seconds > 0:
+                label = f"Video {seconds // 60}:{seconds % 60:02d}"
+            return (
+                f"<a class='video' href='{escape(target)}'>"
+                f"<img src='{escape(poster)}' alt='Video' loading='lazy' referrerpolicy='no-referrer'>"
+                f"<span class='play'>{escape(label)}</span></a>"
+            )
+        return ""
+    url = item.get("url") if isinstance(item.get("url"), str) else ""
+    if not url.startswith("https://"):
+        return ""
+    return (
         f"<a href='{escape(url)}'>"
         f"<img src='{escape(url)}' alt='Photo' loading='lazy' referrerpolicy='no-referrer'>"
-        f"</a>"
-        for url in urls
+        "</a>"
     )
-    return f"<div class='shots {kind}'>{imgs}</div>"
 
 
-def _yt_media(video_id: str, title: str, href: str) -> str:
+def _blocked_video(url: str) -> bool:
+    parts = urlsplit(url)
+    host = parts.netloc.lower()
+    path = parts.path.lower()
+    if "jav-forum.com" in host or host.endswith("dmm.co.jp") or "dmm.com" in host:
+        return True
+    return path.startswith("/data/video/")
+
+
+def _yt_player(video_id: str, title: str, href: str) -> str:
     if not re.fullmatch(r"[A-Za-z0-9_-]{6,}", video_id or ""):
         return _plain_media(href, title, "YouTube", "youtube.com")
-    thumb = f"https://i.ytimg.com/vi/{video_id}/hqdefault.jpg"
+    src = f"https://www.youtube-nocookie.com/embed/{video_id}"
     return (
-        f"<a class='media' href='{escape(href)}'>"
-        f"<img src='{escape(thumb)}' alt='' loading='lazy'>"
-        f"<span class='media-copy'><span class='tag youtube'>YouTube</span>"
-        f"<strong>{escape(title)}</strong>"
-        f"<span class='domain'>youtube.com</span></span></a>"
+        "<div class='player'>"
+        f"<iframe src='{escape(src)}' title='{escape(title)}' loading='lazy' "
+        "allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' "
+        "allowfullscreen referrerpolicy='strict-origin-when-cross-origin'></iframe>"
+        f"<a class='player-caption' href='{escape(href)}'>{escape(title)}</a>"
+        "</div>"
+    )
+
+
+def _clip_html(href: str) -> str:
+    return (
+        f"<a class='clip' href='{escape(href)}'>"
+        "<span class='markplay'>Play</span>"
+        "<span><strong>Video on the original post</strong><br>"
+        "<small>The file stays on the forum.</small></span></a>"
     )
 
 

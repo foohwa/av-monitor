@@ -132,11 +132,65 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
   border: 1px solid var(--line);
   background: var(--bar);
 }
-.shots img {
+.shots img, .shots video {
   width: 100%;
   height: auto;
   display: block;
+  background: var(--bar);
 }
+.shots a.video, .shots .video {
+  position: relative;
+}
+.play {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  background: rgba(28, 25, 21, .82);
+  color: var(--paper);
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 2px 8px;
+}
+.player {
+  margin: 8px 0;
+  border: 1px solid var(--line);
+  background: var(--bar);
+}
+.player iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}
+.player-caption {
+  display: block;
+  padding: 8px 10px;
+  color: var(--paper);
+  text-decoration: none;
+}
+.clip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--bar);
+  color: var(--paper);
+  text-decoration: none;
+}
+.clip .markplay {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--paper);
+  border-radius: 50%;
+  font-size: 12px;
+}
+.clip span:last-child { display: block; }
+.clip small { color: #c8bfb2; }
 .media {
   display: grid;
   grid-template-columns: 168px minmax(0, 1fr);
@@ -207,7 +261,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--seal); outline-
           <time datetime='2026-10-30T12:22:14Z'>2026-10-30 12:22</time>
         </header>
         <p class='text'>Those two in the front must be gay. I can see why she was voted Cheerleader of the Year.</p>
-        <a class='media plain' href='https://www.jav-forum.com/posts/144156/'><span class='media-copy'><span class='tag'>Jav-forum</span><strong>Media attached on the original post</strong><span class='domain'>The file stays on the forum.</span></span></a>
+        <a class='clip' href='https://www.jav-forum.com/posts/144156/'><span class='markplay'>Play</span><span><strong>Video on the original post</strong><br><small>The file stays on the forum.</small></span></a>
         
         <p class='links'><a href='https://www.jav-forum.com/posts/144156/'>Open original</a></p>
       </div>
@@ -337,7 +391,7 @@ https://x.com/yua_mikami/status/2054534603302744282</p>
 Chia Yuua, no matter how many times I watch, I keep falling deeper... 
 ♡Yua Mikami♡ #World&#x27;s Cutest Cheerleader
 https://x.com/loveyua_816/status/2054415643701825911</p>
-        <a class='media plain' href='https://www.jav-forum.com/posts/109322/'><span class='media-copy'><span class='tag'>Jav-forum</span><strong>Media attached on the original post</strong><span class='domain'>The file stays on the forum.</span></span></a>
+        <a class='clip' href='https://www.jav-forum.com/posts/109322/'><span class='markplay'>Play</span><span><strong>Video on the original post</strong><br><small>The file stays on the forum.</small></span></a>
         
         <p class='links'><a href='https://www.jav-forum.com/posts/109322/'>Open original</a></p>
       </div>
@@ -355,7 +409,7 @@ https://x.com/loveyua_816/status/2054415643701825911</p>
         <p class='text'>@craig_steen
 The world&#x27;s cutest Yua Mikami-chan
 https://x.com/craig_steen/status/2054369535286026364</p>
-        <a class='media plain' href='https://www.jav-forum.com/posts/109207/'><span class='media-copy'><span class='tag'>Jav-forum</span><strong>Media attached on the original post</strong><span class='domain'>The file stays on the forum.</span></span></a>
+        <a class='clip' href='https://www.jav-forum.com/posts/109207/'><span class='markplay'>Play</span><span><strong>Video on the original post</strong><br><small>The file stays on the forum.</small></span></a>
         
         <p class='links'><a href='https://www.jav-forum.com/posts/109207/'>Open original</a></p>
       </div>
@@ -518,7 +572,7 @@ https://x.com/craig_steen/status/2053280861735555134</p>
         <p class='text'>@craig_steen
 Yua Mikami-chan is the best, nothing else comes close.
 https://x.com/craig_steen/status/2052924547826118913</p>
-        <a class='media plain' href='https://www.jav-forum.com/posts/108579/'><span class='media-copy'><span class='tag'>Jav-forum</span><strong>Media attached on the original post</strong><span class='domain'>The file stays on the forum.</span></span></a>
+        <a class='clip' href='https://www.jav-forum.com/posts/108579/'><span class='markplay'>Play</span><span><strong>Video on the original post</strong><br><small>The file stays on the forum.</small></span></a>
         
         <p class='links'><a href='https://www.jav-forum.com/posts/108579/'>Open original</a></p>
       </div>

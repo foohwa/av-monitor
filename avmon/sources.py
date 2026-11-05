@@ -117,7 +117,8 @@ def parse_x_html(body: str) -> tuple[str | None, list[Item]]:
         if not tweet_ids:
             continue
         tweet_id = tweet_ids[0]
-        images = _x_images(after, tweet_id)
+        media = _x_media(after, tweet_id)
+        extra = _media_extra(media)
         items.append(
             Item(
                 kind="post",
@@ -126,7 +127,7 @@ def parse_x_html(body: str) -> tuple[str | None, list[Item]]:
                 body=text.strip(),
                 published_at=published,
                 outbound_url=_x_outbound(after),
-                extra={"images": images} if images else {},
+                extra=extra,
             )
         )
     return user_id, items
@@ -265,11 +266,14 @@ def _forum_posts(html: str, page_url: str) -> list[Item]:
         has_media = "<video" in body_html or "<img" in body_html
         body_html = re.sub(r"<blockquote[\s\S]*?</blockquote>", " ", body_html, flags=re.I)
         images = _forum_images(body_html)
+        clip = "<video" in body_html.lower()
         body_html = re.sub(r"<video[\s\S]*?</video>", " ", body_html, flags=re.I)
         text = _plain(body_html)
         extra: dict = {"author": author, "page": page_url, "has_media": has_media}
         if images:
             extra["images"] = images
+        if clip:
+            extra["clip"] = True
         items.append(
             Item(
                 kind="forum_post",
@@ -336,26 +340,51 @@ def _dmm_works(html: str) -> list[Item]:
     return list(found.values())
 
 
-def _x_images(after: str, tweet_id: str) -> list[str]:
-    """Photo files in this post's window. Profile art and video files are left out."""
-    images: list[str] = []
+def _x_media(after: str, tweet_id: str) -> list[dict]:
+    """Photos, plus a poster for a video or gif. The video file itself is left out."""
+    items: list[dict] = []
+    seen: set[str] = set()
+    tweet_url = f"https://x.com/yua_mikami/status/{tweet_id}"
     for match in re.finditer(r'\\"media_url_https\\":\\"(https:[^\\"]+)\\"', after):
         url = _js_string(match.group(1)).split("?", 1)[0]
-        if not url.startswith("https://pbs.twimg.com/media/"):
+        if not url.startswith("https://pbs.twimg.com/"):
             continue
         tail = after[match.end() : match.end() + 240]
         kind = re.search(r'\\"type\\":\\"(photo|video|animated_gif)\\"', tail)
-        if kind is None or kind.group(1) != "photo":
+        if kind is None:
             continue
         head = after[max(0, match.start() - 700) : match.start()]
         expanded = re.findall(r'\\"expanded_url\\":\\"(https:[^\\"]+)\\"', head)
         if expanded and tweet_id not in _js_string(expanded[-1]):
             continue
-        if url not in images:
-            images.append(url)
-        if len(images) == 8:
+        if kind.group(1) == "photo":
+            if "/media/" not in url:
+                continue
+            item = {"kind": "image", "url": url}
+            key = url
+        else:
+            path = urlsplit(url).path.lower()
+            if path.endswith((".mp4", ".m3u8", ".mov", ".webm", ".m4v")):
+                continue
+            item = {"kind": "video", "poster": url, "href": tweet_url}
+            key = url
+        if key in seen:
+            continue
+        seen.add(key)
+        items.append(item)
+        if len(items) == 8:
             break
-    return images
+    return items
+
+
+def _media_extra(media: list[dict]) -> dict:
+    images = [item["url"] for item in media if item.get("kind") == "image" and item.get("url")]
+    extra: dict = {}
+    if media:
+        extra["media"] = media
+    if images:
+        extra["images"] = images
+    return extra
 
 
 def _forum_images(html: str) -> list[str]:
