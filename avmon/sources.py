@@ -266,14 +266,15 @@ def _forum_posts(html: str, page_url: str) -> list[Item]:
         has_media = "<video" in body_html or "<img" in body_html
         body_html = re.sub(r"<blockquote[\s\S]*?</blockquote>", " ", body_html, flags=re.I)
         images = _forum_images(body_html)
-        clip = "<video" in body_html.lower()
+        play = _forum_clip_url(body_html)
         body_html = re.sub(r"<video[\s\S]*?</video>", " ", body_html, flags=re.I)
         text = _plain(body_html)
         extra: dict = {"author": author, "page": page_url, "has_media": has_media}
         if images:
             extra["images"] = images
-        if clip:
+        if play:
             extra["clip"] = True
+            extra["play"] = play
         items.append(
             Item(
                 kind="forum_post",
@@ -405,6 +406,32 @@ def _forum_images(html: str) -> list[str]:
         if len(images) == 8:
             break
     return images
+
+
+def _forum_clip_url(html: str) -> str | None:
+    """Address of a video attached to this post. The file stays on the forum."""
+    for tag in re.findall(r"<video\b[\s\S]*?</video>", html, flags=re.I):
+        for src in re.findall(r'(?:src|data-src)="([^"]+)"', tag, flags=re.I):
+            url = _forum_video_url(unescape(src.strip()))
+            if url:
+                return url
+    return None
+
+
+def _forum_video_url(src: str) -> str | None:
+    if src.startswith("//"):
+        src = "https:" + src
+    elif src.startswith("/"):
+        src = "https://www.jav-forum.com" + src
+    elif not src.startswith("https://"):
+        return None
+    parts = urlsplit(src)
+    host = parts.netloc.lower()
+    if host not in ("www.jav-forum.com", "jav-forum.com"):
+        return None
+    if not parts.path.lower().endswith((".mp4", ".webm", ".mov", ".m4v")):
+        return None
+    return urlunsplit(("https", "www.jav-forum.com", parts.path, "", ""))
 
 
 def _forum_photo_url(src: str) -> str | None:

@@ -364,6 +364,12 @@ a:focus-visible, button:focus-visible {{ outline: 2px solid var(--seal); outline
   aspect-ratio: 16 / 9;
   border: 0;
 }}
+.player video {{
+  display: block;
+  width: 100%;
+  max-height: 640px;
+  background: #000;
+}}
 .player-caption {{
   display: block;
   padding: 8px 10px;
@@ -593,7 +599,8 @@ def _media_html(row, extra: dict, data: dict) -> str:
         parts.append(_work_media(row["url"], code, row["title"] or row["external_id"], site))
         return "".join(parts)
     if extra.get("clip"):
-        parts.append(_clip_html(row["url"]))
+        play = extra.get("play") if isinstance(extra.get("play"), str) else ""
+        parts.append(_clip_html(row["url"], play))
     if parts:
         return "".join(parts)
     if site == "x" and "t.co/" in (row["body"] or ""):
@@ -704,12 +711,8 @@ def _gallery_cell(item: dict) -> str:
 
 
 def _blocked_video(url: str) -> bool:
-    parts = urlsplit(url)
-    host = parts.netloc.lower()
-    path = parts.path.lower()
-    if "jav-forum.com" in host or host.endswith("dmm.co.jp") or "dmm.com" in host:
-        return True
-    return path.startswith("/data/video/")
+    host = urlsplit(url).netloc.lower()
+    return host.endswith("dmm.co.jp") or "dmm.com" in host
 
 
 def _yt_player(video_id: str, title: str, href: str) -> str:
@@ -726,7 +729,14 @@ def _yt_player(video_id: str, title: str, href: str) -> str:
     )
 
 
-def _clip_html(href: str) -> str:
+def _clip_html(href: str, play: str = "") -> str:
+    if play.startswith("https://") and not _blocked_video(play):
+        return (
+            "<div class='player'>"
+            f"<video controls playsinline preload='metadata' referrerpolicy='no-referrer' src='{escape(play)}'></video>"
+            f"<a class='player-caption' href='{escape(play)}'>Play the video</a>"
+            "</div>"
+        )
     return (
         f"<a class='clip' href='{escape(href)}'>"
         "<span class='markplay'>Play</span>"
