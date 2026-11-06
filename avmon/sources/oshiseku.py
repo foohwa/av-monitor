@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from urllib.parse import urlsplit
 
 from avmon.http import FetchError, get
 from avmon.sources.dmm import code_key, package_url
@@ -20,9 +21,12 @@ def fetch(url: str, native_id: str | None) -> Parsed:
     del native_id
     status, final_url, body = get(url)
     facts = _profile_table(body)
-    summary = _section_paragraph(body, "三上悠亜とは")
+    summary = _section_paragraph(body, _summary_heading(body))
     if summary:
         facts.append(("summary", clip(summary, 500)))
+    portrait = _portrait(body)
+    if portrait:
+        facts.append(("portrait", portrait))
     items = _dmm_works(body)
     if not facts and not items:
         raise FetchError("Oshiseku page had neither the profile table nor DMM works", status)
@@ -45,7 +49,39 @@ def _profile_table(html: str) -> list[tuple[str, str]]:
     return facts
 
 
-def _section_paragraph(html: str, heading: str) -> str | None:
+def _portrait(html: str) -> str | None:
+    """FANZA catalog headshot published as the page's og:image."""
+    match = re.search(
+        r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\'](https://[^"\']+)["\']',
+        html,
+        re.I,
+    )
+    if match is None:
+        match = re.search(
+            r'<meta[^>]+content=["\'](https://[^"\']+)["\'][^>]+property=["\']og:image["\']',
+            html,
+            re.I,
+        )
+    if match is None:
+        return None
+    url = match.group(1).split("?", 1)[0]
+    parts = urlsplit(url)
+    if parts.netloc.lower() != "pics.dmm.co.jp" or "/mono/actjpgs/" not in parts.path:
+        return None
+    return url
+
+
+def _summary_heading(html: str) -> str | None:
+    """Profile pages title the bio 「名前とは」."""
+    match = re.search(r"<h[1-3][^>]*>\s*([^<]{1,40}とは)\s*</h[1-3]>", html)
+    if match is None:
+        return None
+    return plain(match.group(1))
+
+
+def _section_paragraph(html: str, heading: str | None) -> str | None:
+    if not heading:
+        return None
     index = html.find(heading)
     if index < 0:
         return None

@@ -19,15 +19,15 @@ AUTHOR = "Jav-forum"
 
 
 def fetch(url: str, native_id: str | None) -> Parsed:
-    del native_id
     latest = url.rstrip("/") + "/latest"
     status, final_url, body = get(latest)
     items = _posts(body, final_url)
     if not items:
         raise FetchError(f"Jav-forum latest page had no posts ({final_url})", status)
     note = f"latest page {final_url}"
+    # Thread 143 is the original sample. Other threads have no reason to open page 10.
     given = url.rstrip("/") + "/page-10"
-    if "post-108578" not in body:
+    if native_id == "143" and "post-108578" not in body:
         status2, final2, body2 = get(given)
         extra = _posts(body2, final2)
         known = {item.external_id for item in items}

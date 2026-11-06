@@ -21,7 +21,7 @@ AUTHOR = "@yua_mikami"
 def fetch(url: str, native_id: str | None) -> Parsed:
     del native_id
     status, final_url, body = get(url)
-    user_id, items = parse_html(body)
+    user_id, items = parse_html(body, _handle(url))
     if not items:
         raise FetchError(
             "X returned a page with no embedded posts. The logged-out profile is the source, and it did not include a timeline.",
@@ -31,7 +31,7 @@ def fetch(url: str, native_id: str | None) -> Parsed:
     return Parsed(status, final_url, items, native_id=user_id, note=note)
 
 
-def parse_html(body: str) -> tuple[str | None, list[Item]]:
+def parse_html(body: str, handle: str) -> tuple[str | None, list[Item]]:
     """Read the posts embedded in the logged-out profile HTML."""
     user_ids = re.findall(r'\\"rest_id\\":\\"(\d+)\\"', body)
     if not user_ids or "full_text" not in body:
@@ -53,13 +53,15 @@ def parse_html(body: str) -> tuple[str | None, list[Item]]:
         if not tweet_ids:
             continue
         tweet_id = tweet_ids[0]
-        media = _media(after, tweet_id)
+        media = _media(after, tweet_id, handle)
         extra = _media_extra(media)
+        if handle:
+            extra["author"] = f"@{handle}"
         items.append(
             Item(
                 kind="post",
                 external_id=tweet_id,
-                url=f"https://x.com/yua_mikami/status/{tweet_id}",
+                url=f"https://x.com/{handle}/status/{tweet_id}" if handle else f"https://x.com/i/status/{tweet_id}",
                 body=text.strip(),
                 published_at=published,
                 outbound_url=_outbound(after),
@@ -69,11 +71,21 @@ def parse_html(body: str) -> tuple[str | None, list[Item]]:
     return user_id, items
 
 
-def _media(after: str, tweet_id: str) -> list[dict]:
+def _handle(url: str) -> str:
+    """First path segment of a profile URL, for example yua_mikami."""
+    segment = urlsplit(url).path.strip("/").split("/", 1)[0]
+    if segment in {"", "i", "intent", "share", "home"}:
+        return ""
+    return segment
+
+
+def _media(after: str, tweet_id: str, handle: str) -> list[dict]:
     """Photos, plus a poster for a video or gif. The video file itself is left out."""
     items: list[dict] = []
     seen: set[str] = set()
-    tweet_url = f"https://x.com/yua_mikami/status/{tweet_id}"
+    tweet_url = (
+        f"https://x.com/{handle}/status/{tweet_id}" if handle else f"https://x.com/i/status/{tweet_id}"
+    )
     for match in re.finditer(r'\\"media_url_https\\":\\"(https:[^\\"]+)\\"', after):
         url = _js_string(match.group(1)).split("?", 1)[0]
         if not url.startswith("https://pbs.twimg.com/"):

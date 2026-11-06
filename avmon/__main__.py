@@ -6,7 +6,7 @@ from avmon.web import export_static, serve
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Check monitoring data for 三上悠亜")
+    parser = argparse.ArgumentParser(description="Check monitoring data for saved actresses")
     parser.add_argument("command", choices=("fetch", "show", "serve", "export"))
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--out", default="docs")

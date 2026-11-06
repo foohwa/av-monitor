@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from urllib.parse import urlsplit
 
 from avmon.http import FetchError, get
 from avmon.sources.model import Parsed
@@ -24,11 +25,16 @@ def fetch(url: str, native_id: str | None) -> Parsed:
         raise FetchError("TikTok returned a WAF challenge instead of the profile", status)
     payload = json.loads(body)
     author = payload.get("author_name") or ""
-    handle = payload.get("author_url") or url
-    if "yua_mikami" not in handle and "yua_mikami" not in url:
-        raise FetchError(f"TikTok oEmbed pointed at {handle}", status)
+    pointed = payload.get("author_url") or ""
+    if _handle(pointed) and _handle(pointed) != _handle(url):
+        raise FetchError(f"TikTok oEmbed pointed at {pointed}", status)
     note = (
         f"oEmbed confirms the profile ({author}). "
         "The video page is a WAF challenge, so no posts were stored."
     )
     return Parsed(status, final_url, [], note=note)
+
+
+def _handle(url: str) -> str:
+    segment = urlsplit(url).path.strip("/").split("/", 1)[0]
+    return segment.lstrip("@").lower()

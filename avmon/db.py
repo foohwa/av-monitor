@@ -1,4 +1,4 @@
-"""SQLite schema, seed, and activity upserts for the one-actress check."""
+"""SQLite schema, seed, and activity upserts."""
 
 from __future__ import annotations
 
@@ -70,56 +70,116 @@ CREATE TABLE IF NOT EXISTS fetch_log (
 );
 """
 
-# The Jav-forum link is the thread. Page 10 and post 108578 are a point inside it.
-ACCOUNTS = [
+# One dict per actress. Each account is one public page the runner fetches.
+# Jav-forum native_id 143 is 三上悠亜's thread. Page 10 and post 108578 are a point inside it.
+PEOPLE = [
     {
-        "site": "youtube",
-        "kind": "channel",
-        "native_id": "UC0BCfHbNORhd7dsw1R5rw9w",
-        "handle": None,
-        "url": "https://www.youtube.com/channel/UC0BCfHbNORhd7dsw1R5rw9w",
+        "name_jp": "三上悠亜",
+        "name_en": "Yua Mikami",
+        "notes": (
+            "Request marker @foofoo6912. "
+            "Jav-forum sample point was page-10#post-108578."
+        ),
+        "accounts": [
+            {
+                "site": "youtube",
+                "kind": "channel",
+                "native_id": "UC0BCfHbNORhd7dsw1R5rw9w",
+                "handle": None,
+                "url": "https://www.youtube.com/channel/UC0BCfHbNORhd7dsw1R5rw9w",
+            },
+            {
+                "site": "x",
+                "kind": "profile",
+                "native_id": None,
+                "handle": "yua_mikami",
+                "url": "https://x.com/yua_mikami",
+            },
+            {
+                "site": "tiktok",
+                "kind": "profile",
+                "native_id": None,
+                "handle": "yua_mikami",
+                "url": "https://www.tiktok.com/@yua_mikami",
+            },
+            {
+                "site": "instagram",
+                "kind": "profile",
+                "native_id": None,
+                "handle": "yua_mikami",
+                "url": "https://www.instagram.com/yua_mikami",
+            },
+            {
+                "site": "oshiseku",
+                "kind": "profile",
+                "native_id": None,
+                "handle": None,
+                "url": "https://oshiseku.com/actless/三上悠亜/",
+            },
+            {
+                "site": "javforum",
+                "kind": "thread",
+                "native_id": "143",
+                "handle": None,
+                "url": "https://www.jav-forum.com/threads/yua-mikami-三上悠亜.143/",
+            },
+            {
+                "site": "avfan",
+                "kind": "tag_page",
+                "native_id": "yua-mikami",
+                "handle": None,
+                "url": "https://avfan.org/movie/tag/yua-mikami",
+            },
+        ],
     },
     {
-        "site": "x",
-        "kind": "profile",
-        "native_id": None,
-        "handle": "yua_mikami",
-        "url": "https://x.com/yua_mikami",
-    },
-    {
-        "site": "tiktok",
-        "kind": "profile",
-        "native_id": None,
-        "handle": "yua_mikami",
-        "url": "https://www.tiktok.com/@yua_mikami",
-    },
-    {
-        "site": "instagram",
-        "kind": "profile",
-        "native_id": None,
-        "handle": "yua_mikami",
-        "url": "https://www.instagram.com/yua_mikami",
-    },
-    {
-        "site": "oshiseku",
-        "kind": "profile",
-        "native_id": None,
-        "handle": None,
-        "url": "https://oshiseku.com/actless/三上悠亜/",
-    },
-    {
-        "site": "javforum",
-        "kind": "thread",
-        "native_id": "143",
-        "handle": None,
-        "url": "https://www.jav-forum.com/threads/yua-mikami-三上悠亜.143/",
-    },
-    {
-        "site": "avfan",
-        "kind": "tag_page",
-        "native_id": "yua-mikami",
-        "handle": None,
-        "url": "https://avfan.org/movie/tag/yua-mikami",
+        "name_jp": "深田えいみ",
+        "name_en": "Eimi Fukada",
+        "notes": "Public pages only. avfan has no tag page for this name.",
+        "accounts": [
+            {
+                "site": "youtube",
+                "kind": "channel",
+                "native_id": "UCprlj3Bvn0c3XsyvZsIrzEg",
+                "handle": "Eimi_ch",
+                "url": "https://www.youtube.com/@Eimi_ch",
+            },
+            {
+                "site": "x",
+                "kind": "profile",
+                "native_id": None,
+                "handle": "fukada0318",
+                "url": "https://x.com/fukada0318",
+            },
+            {
+                "site": "tiktok",
+                "kind": "profile",
+                "native_id": None,
+                "handle": "fukada0318",
+                "url": "https://www.tiktok.com/@fukada0318",
+            },
+            {
+                "site": "instagram",
+                "kind": "profile",
+                "native_id": None,
+                "handle": "eimi0318",
+                "url": "https://www.instagram.com/eimi0318",
+            },
+            {
+                "site": "oshiseku",
+                "kind": "profile",
+                "native_id": None,
+                "handle": None,
+                "url": "https://oshiseku.com/actless/深田えいみ/",
+            },
+            {
+                "site": "javforum",
+                "kind": "thread",
+                "native_id": "192",
+                "handle": None,
+                "url": "https://www.jav-forum.com/threads/eimi-fukada-深田えいみ.192/",
+            },
+        ],
     },
 ]
 
@@ -134,42 +194,47 @@ def connect() -> sqlite3.Connection:
 
 
 def seed(con: sqlite3.Connection) -> int:
-    row = con.execute("SELECT id FROM person WHERE name_jp = ?", ("三上悠亜",)).fetchone()
-    if row is None:
-        cur = con.execute(
-            """
-            INSERT INTO person (name_jp, name_en, notes)
-            VALUES (?, ?, ?)
-            """,
-            (
-                "三上悠亜",
-                "Yua Mikami",
-                "Single-actress check. Request marker @foofoo6912. "
-                "Jav-forum sample point was page-10#post-108578.",
-            ),
-        )
-        person_id = int(cur.lastrowid)
-    else:
-        person_id = int(row["id"])
-    for account in ACCOUNTS:
-        con.execute(
-            """
-            INSERT INTO account (person_id, site, kind, native_id, handle, url)
-            VALUES (?, ?, ?, ?, ?, ?)
-            ON CONFLICT(site, url) DO UPDATE SET
-                kind = excluded.kind,
-                handle = excluded.handle,
-                native_id = COALESCE(account.native_id, excluded.native_id)
-            """,
-            (
-                person_id,
-                account["site"],
-                account["kind"],
-                account["native_id"],
-                account["handle"],
-                account["url"],
-            ),
-        )
+    """Insert each actress and her accounts. Returns the last person id."""
+    person_id = 0
+    for person in PEOPLE:
+        row = con.execute(
+            "SELECT id FROM person WHERE name_jp = ?", (person["name_jp"],)
+        ).fetchone()
+        if row is None:
+            cur = con.execute(
+                """
+                INSERT INTO person (name_jp, name_en, notes)
+                VALUES (?, ?, ?)
+                """,
+                (person["name_jp"], person["name_en"], person["notes"]),
+            )
+            person_id = int(cur.lastrowid)
+        else:
+            person_id = int(row["id"])
+            con.execute(
+                "UPDATE person SET name_en = ?, notes = ? WHERE id = ?",
+                (person["name_en"], person["notes"], person_id),
+            )
+        for account in person["accounts"]:
+            con.execute(
+                """
+                INSERT INTO account (person_id, site, kind, native_id, handle, url)
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT(site, url) DO UPDATE SET
+                    person_id = excluded.person_id,
+                    kind = excluded.kind,
+                    handle = excluded.handle,
+                    native_id = COALESCE(account.native_id, excluded.native_id)
+                """,
+                (
+                    person_id,
+                    account["site"],
+                    account["kind"],
+                    account["native_id"],
+                    account["handle"],
+                    account["url"],
+                ),
+            )
     con.commit()
     return person_id
 

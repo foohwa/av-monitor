@@ -245,7 +245,7 @@ def render_actor(raw: str, data: dict | None = None) -> str:
         f"<section class='profile' lang='ja' style='--hue:{_hue(pid)}'>"
         "<div class='profile-cover' aria-hidden='true'></div>"
         "<div class='profile-in'>"
-        f"<div class='profile-top'>{_avatar(pid, name, size='xl', link=False)}{_follow(pid, name)}</div>"
+        f"<div class='profile-top'>{_avatar(pid, name, data, size='xl', link=False)}{_follow(pid, name)}</div>"
         f"<h1>{escape(name)}</h1><p class='sub'>{sub}</p>"
         + (f"<p class='bio'>{escape(summary)}</p>" if summary else "")
         + (f"<dl class='facts'>{fact_html}</dl>" if fact_html else "")
@@ -422,7 +422,7 @@ def _post(row, data: dict, *, full: bool = False) -> str:
     return (
         f"<article class='post{' op' if full else ''}' lang='ja' id='post-{escape(site)}-{escape(eid)}' "
         f"data-site='{escape(site)}' data-person='{pid}' data-dated='{1 if row['published_at'] else 0}'>"
-        f"{_avatar(pid, name)}"
+        f"{_avatar(pid, name, data)}"
         f"<div class='post-main'>{head}{title_html}{text_html}{_media_html(row, extra, data, full=full)}"
         f"<footer class='post-foot'>{''.join(actions)}</footer></div></article>"
     )
@@ -435,7 +435,7 @@ def _person_item(pid: int, data: dict) -> str:
     sub = escape(person["name_en"]) if person["name_en"] else _t(f"{count} 条动态", f"{count} posts")
     return (
         "<li class='person'>"
-        f"{_avatar(pid, name, size='sm')}"
+        f"{_avatar(pid, name, data, size='sm')}"
         f"<a class='person-name' href='/a/{pid}/'><span lang='ja'>{escape(name)}</span><span class='ps'>{sub}</span></a>"
         f"{_follow(pid, name)}</li>"
     )
@@ -497,13 +497,19 @@ def _source_row(href: str, site: str, label_html: str, count: int, on: bool, sta
     )
 
 
-def _avatar(pid: int, name: str, *, size: str = "", link: bool = True) -> str:
+def _avatar(pid: int, name: str, data: dict, *, size: str = "", link: bool = True) -> str:
     cls = f"avatar {size}".strip()
     initial = escape(name[:1] or "?")
+    portrait = data["facts"].get(pid, {}).get("portrait") or ""
+    photo = ""
+    if portrait.startswith("https://"):
+        photo = (
+            f"<img src='{escape(portrait)}' alt='' loading='lazy' referrerpolicy='no-referrer'>"
+        )
     if not link:
-        return f"<span class='{cls}' lang='ja' style='--hue:{_hue(pid)}' aria-hidden='true'>{initial}</span>"
+        return f"<span class='{cls}' lang='ja' style='--hue:{_hue(pid)}' aria-hidden='true'>{initial}{photo}</span>"
     return (
-        f"<a class='{cls}' lang='ja' href='/a/{pid}/' style='--hue:{_hue(pid)}' tabindex='-1' aria-hidden='true'>{initial}</a>"
+        f"<a class='{cls}' lang='ja' href='/a/{pid}/' style='--hue:{_hue(pid)}' tabindex='-1' aria-hidden='true'>{initial}{photo}</a>"
     )
 
 
@@ -1081,7 +1087,7 @@ html:not([data-lang=en]) .i18n[lang=en], html[data-lang=en] .i18n[lang=zh-Hans] 
 .tabs a {
   position: relative; z-index: 1; min-width: 108px; padding: 6px 16px; border-radius: 999px;
   text-align: center; font-size: 14px; font-weight: 600; color: var(--muted); text-decoration: none;
-  transition: color 160ms ease;
+  white-space: nowrap; transition: color 160ms ease;
 }
 .tabs a[aria-current] { color: var(--ink); }
 .tabs-pill {
@@ -1100,7 +1106,7 @@ html:not([data-lang=en]) .i18n[lang=en], html[data-lang=en] .i18n[lang=zh-Hans] 
 }
 .lang button {
   height: 26px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent;
-  color: var(--muted); font-size: 12.5px; font-weight: 650; cursor: pointer;
+  color: var(--muted); font-size: 12.5px; font-weight: 650; cursor: pointer; white-space: nowrap;
   transition: background-color 150ms ease, color 150ms ease, transform 140ms var(--ease-out);
 }
 .lang button[aria-pressed=true] { background: var(--pill); color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .1), 0 0 0 1px var(--line); }
@@ -1153,11 +1159,16 @@ body[data-view=following] .strip { display: none; }
 .post-main { min-width: 0; }
 .avatar {
   --hue: 340;
+  position: relative; overflow: hidden;
   width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; flex: none;
   font-size: 16px; font-weight: 680; text-decoration: none;
   color: oklch(0.99 0.01 var(--hue));
   background: linear-gradient(150deg, oklch(0.72 0.14 var(--hue)), oklch(0.54 0.16 calc(var(--hue) + 28)));
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14);
+}
+.avatar img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; border-radius: inherit;
 }
 .avatar.sm { width: 36px; height: 36px; font-size: 14px; }
 .avatar.xl { width: 84px; height: 84px; font-size: 34px; box-shadow: 0 0 0 4px var(--surface); }

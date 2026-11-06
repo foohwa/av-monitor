@@ -17,7 +17,11 @@ def fetch_all() -> None:
         "SELECT * FROM account WHERE enabled = 1 ORDER BY id"
     ).fetchall()
     print(f"database  { _db_path() }")
-    print(f"person    三上悠亜")
+    people = con.execute("SELECT name_jp, name_en FROM person ORDER BY id").fetchall()
+    names = ", ".join(
+        f"{row['name_jp']} ({row['name_en']})" if row["name_en"] else row["name_jp"] for row in people
+    )
+    print(f"people    {names}")
     print("")
     for account in accounts:
         _fetch_one(con, account)
@@ -33,10 +37,11 @@ def report(con: sqlite3.Connection | None = None) -> None:
     print("accounts")
     rows = con.execute(
         """
-        SELECT a.site, a.kind, a.native_id, a.handle, a.last_status, a.last_error,
+        SELECT p.name_jp, a.site, a.kind, a.native_id, a.handle, a.last_status, a.last_error,
                (SELECT COUNT(*) FROM activity WHERE account_id = a.id) AS rows,
                (SELECT items_new FROM fetch_log WHERE account_id = a.id ORDER BY id DESC LIMIT 1) AS new_rows
         FROM account a
+        JOIN person p ON p.id = a.person_id
         ORDER BY a.id
         """
     ).fetchall()
@@ -44,7 +49,7 @@ def report(con: sqlite3.Connection | None = None) -> None:
         ident = row["native_id"] or row["handle"] or ""
         err = f"  {row['last_error']}" if row["last_error"] else ""
         print(
-            f"  {row['site']:<10} {row['last_status'] or '-':<8} "
+            f"  {row['name_jp']:<6} {row['site']:<10} {row['last_status'] or '-':<8} "
             f"rows {row['rows']:<4} new {row['new_rows'] if row['new_rows'] is not None else '-':<4} "
             f"{ident}{err}"
         )

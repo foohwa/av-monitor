@@ -25,6 +25,7 @@ def fetch(url: str, native_id: str | None) -> Parsed:
     feed_url = f"https://www.youtube.com/feeds/videos.xml?channel_id={channel_id}"
     status, final_url, body = get(feed_url, accept="application/atom+xml,application/xml,text/xml")
     root = ElementTree.fromstring(body)
+    author = _text(root, f"{{{ATOM}}}author/{{{ATOM}}}name")
     items: list[Item] = []
     for entry in root.findall(f"{{{ATOM}}}entry"):
         video_id = _text(entry, f"{{{YT}}}videoId")
@@ -41,6 +42,7 @@ def fetch(url: str, native_id: str | None) -> Parsed:
                 title=title,
                 body=clip(description, 240),
                 published_at=published,
+                extra={"author": author} if author else {},
             )
         )
     return Parsed(status, final_url, items, native_id=channel_id)
